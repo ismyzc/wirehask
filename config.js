@@ -1,4 +1,5 @@
-{
+// Edit wallet addresses, price and sales email here. Keep the object valid JSON (double quotes, no trailing commas).
+window.NETROVA_CONFIG = {
   "product": "Netrova Analyzer Pro",
   "price_usd": 1270,
   "sales_email": "sales@netrova.io",
@@ -9,4 +10,4 @@
     "btc":        { "label": "Bitcoin", "network": "Bitcoin", "address": "YOUR_BITCOIN_ADDRESS" },
     "eth":        { "label": "Ethereum", "network": "Ethereum", "address": "YOUR_ETHEREUM_ADDRESS" }
   }
-}
+};

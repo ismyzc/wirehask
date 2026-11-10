@@ -3,7 +3,8 @@ declare(strict_types=1);
 header('Content-Type: application/json; charset=utf-8');
 header('Cache-Control: no-store');
 
-$cfg  = json_decode((string)file_get_contents(__DIR__ . '/config.json'), true);
+$raw  = (string)file_get_contents(__DIR__ . '/config.js');
+$cfg  = json_decode(substr($raw, strpos($raw, '{'), strrpos($raw, '}') - strpos($raw, '{') + 1), true);
 $cfg['notify_email'] = $cfg['sales_email'];
 $cfg['from_email']   = $cfg['sales_email'];
 $DATA = __DIR__ . '/data';

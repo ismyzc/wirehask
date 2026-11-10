@@ -8,6 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="config.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js" defer></script>
 <style>
 :root{
@@ -562,10 +563,9 @@ for (let i = 0; i < 36; i++) { const b = document.createElement('i'); b.style.he
 
 /* config + helpers */
 let CFG = null, BACKEND = null;
-const cfgReady = fetch('config.json', {cache:'no-store'}).then(r => r.json()).then(c => {
-  CFG = c;
-  document.querySelectorAll('[data-mail]').forEach(a => a.href = 'mailto:' + c.sales_email);
-});
+CFG = window.NETROVA_CONFIG;
+const cfgReady = Promise.resolve();
+document.querySelectorAll('[data-mail]').forEach(a => a.href = 'mailto:' + CFG.sales_email);
 const toast = m => { const t = $('#toast'); t.textContent = m; t.classList.add('show'); clearTimeout(t._h); t._h = setTimeout(() => t.classList.remove('show'), 1800); };
 const esc = s => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const fmtUsd = v => '$' + Number(v).toLocaleString('en-US', {minimumFractionDigits:2});
@@ -757,7 +757,7 @@ function stepResult() {
     const under = o.status === 'underpaid';
     html = `<div class="big" style="background:rgba(245,158,11,.12)">${clk}</div><h4>${under ? 'Partial payment received' : 'Waiting for confirmation'}</h4>
       <p>${under ? `We received ${esc(o.received)} ${unit}, which is less than the required ${esc(o.amount)} ${unit}. Please contact support with your order ID.`
-        : 'Your transaction has been recorded. It will be confirmed as soon as the network includes it in a block.'}</p>
+        : 'Your transaction has been submitted. It will be confirmed as soon as the network includes it in a block.'}</p>
       <div class="kv"><label>Order ID</label><div class="copy"><code>${esc(o.id)}</code><button data-cp="${esc(o.id)}">Copy</button></div></div>
       <div class="kv"><label>Transaction</label><div class="copy"><code>${esc(o.tx)}</code><button data-cp="${esc(o.tx)}">Copy</button></div></div>
       ${errBox()}

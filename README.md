@@ -4,7 +4,7 @@ Single-page product site (English) with a $1,270 lifetime license sold via crypt
 
 ## Files
 - `index.html` — the full page (hero, features, protocols, pricing, FAQ, checkout modal).
-- `config.json` — product name, price, sales email and **wallet addresses** (edit these before going live).
+- `config.js` — product name, price, sales email and **wallet addresses** (edit these before going live).
 - `order.php` — optional PHP backend: live quotes, on-chain verification, order storage (`data/orders.json`), license key generation and email notifications.
 
 ## Payment methods
