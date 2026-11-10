@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Netrova Analyzer Pro — Deep Packet Inspection for Network Professionals</title>
-<meta name="description" content="Netrova Analyzer Pro is a professional network protocol analyzer: live packet capture, deep protocol dissection, TLS decryption, stream reassembly and expert diagnostics.">
+<title>Netrova Analyzer Pro — Netrova Hub</title>
+<meta name="description" content="Netrova Analyzer Pro on Netrova Hub: releases, installers, documentation, system requirements and lifetime licensing for the professional network protocol analyzer.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -12,186 +12,183 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js" defer></script>
 <style>
 :root{
-  --bg:#070b14;--bg2:#0b1120;--card:#0f172a;--card2:#111b31;--line:#1e2a44;--line2:#273556;
+  --bg:#060a13;--bg2:#0a101d;--card:#0d1526;--card2:#111b31;--line:#1b2640;--line2:#273556;
   --txt:#e6ecf7;--mut:#93a1bd;--dim:#64748b;--acc:#22d3ee;--acc2:#8b5cf6;--ok:#22c55e;--warn:#f59e0b;--err:#ef4444;
   --grad:linear-gradient(135deg,#22d3ee 0%,#6366f1 55%,#a855f7 100%);
-  --r:16px;--mono:'JetBrains Mono',ui-monospace,monospace;
+  --r:14px;--mono:'JetBrains Mono',ui-monospace,monospace;
 }
 *{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth}
+html{scroll-behavior:smooth;scroll-padding-top:120px}
 body{font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,sans-serif;background:var(--bg);color:var(--txt);line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
 a{color:inherit;text-decoration:none}
-.wrap{max-width:1200px;margin:0 auto;padding:0 24px}
-.grad-txt{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;padding:14px 26px;border-radius:12px;font-weight:600;font-size:15px;cursor:pointer;border:0;transition:.2s;font-family:inherit}
-.btn-pri{background:var(--grad);color:#fff;box-shadow:0 10px 30px -10px rgba(99,102,241,.7)}
-.btn-pri:hover{transform:translateY(-2px);box-shadow:0 16px 40px -12px rgba(99,102,241,.9)}
+.wrap{max-width:1240px;margin:0 auto;padding:0 24px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;padding:12px 22px;border-radius:10px;font-weight:600;font-size:14px;cursor:pointer;border:0;transition:.2s;font-family:inherit;color:inherit}
+.btn-pri{background:var(--grad);color:#fff;box-shadow:0 10px 30px -12px rgba(99,102,241,.8)}
+.btn-pri:hover{transform:translateY(-1px);box-shadow:0 14px 36px -12px rgba(99,102,241,.95)}
 .btn-ghost{background:rgba(255,255,255,.04);color:var(--txt);border:1px solid var(--line2)}
 .btn-ghost:hover{background:rgba(255,255,255,.08)}
+.btn-sm{padding:8px 14px;font-size:13px;border-radius:8px}
 .btn:disabled{opacity:.5;cursor:not-allowed;transform:none}
-.pill{display:inline-flex;align-items:center;gap:8px;padding:6px 14px;border-radius:999px;border:1px solid var(--line2);background:rgba(34,211,238,.06);color:#a5f3fc;font-size:13px;font-weight:500}
-.dot{width:8px;height:8px;border-radius:50%;background:var(--ok);box-shadow:0 0 12px var(--ok)}
-section{padding:110px 0;position:relative}
-.sec-head{text-align:center;max-width:720px;margin:0 auto 64px}
-.sec-head .eyebrow{color:var(--acc);font-weight:600;font-size:13px;letter-spacing:.16em;text-transform:uppercase}
-.sec-head h2{font-size:clamp(30px,4vw,44px);line-height:1.15;margin:14px 0 16px;font-weight:800;letter-spacing:-.02em}
-.sec-head p{color:var(--mut);font-size:18px}
+.mono{font-family:var(--mono)}
+.tag{display:inline-flex;align-items:center;gap:6px;padding:3px 10px;border-radius:999px;font-size:12px;font-weight:600;border:1px solid var(--line2);color:var(--mut);background:rgba(255,255,255,.03)}
+.tag.ok{color:#86efac;border-color:rgba(34,197,94,.35);background:rgba(34,197,94,.08)}
+.tag.acc{color:#a5f3fc;border-color:rgba(34,211,238,.35);background:rgba(34,211,238,.08)}
+.tag.vio{color:#c4b5fd;border-color:rgba(139,92,246,.35);background:rgba(139,92,246,.1)}
 
-/* nav */
-nav{position:fixed;inset:0 0 auto 0;z-index:50;transition:.3s;border-bottom:1px solid transparent}
-nav.scrolled{background:rgba(7,11,20,.82);backdrop-filter:blur(14px);border-color:var(--line)}
-nav .wrap{display:flex;align-items:center;justify-content:space-between;height:72px}
-.logo{display:flex;align-items:center;gap:10px;font-weight:800;font-size:19px;letter-spacing:-.01em}
-.logo svg{width:32px;height:32px}
-.nav-links{display:flex;gap:34px;color:var(--mut);font-size:15px;font-weight:500}
-.nav-links a:hover{color:var(--txt)}
-.nav-cta{padding:10px 20px;font-size:14px}
-@media(max-width:860px){.nav-links{display:none}}
+/* top bar */
+.top{position:sticky;top:0;z-index:50;background:rgba(6,10,19,.85);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+.top .wrap{display:flex;align-items:center;gap:28px;height:64px}
+.brand{display:flex;align-items:center;gap:10px;font-weight:800;font-size:17px;letter-spacing:-.01em}
+.brand svg{width:30px;height:30px}
+.brand .hub{font-weight:600;font-size:12px;padding:2px 8px;border-radius:6px;background:var(--grad);color:#fff;letter-spacing:.04em}
+.top nav{display:flex;gap:22px;font-size:14px;color:var(--mut)}
+.top nav a:hover{color:var(--txt)}
+.top .r{margin-left:auto;display:flex;gap:10px;align-items:center}
+@media(max-width:860px){.top nav{display:none}}
+@media(max-width:560px){.top .r .btn-ghost{display:none}.ph-act{width:100%}.ph-act .btn{flex:1}}
 
-/* hero */
-.hero{padding:160px 0 90px;overflow:hidden}
-.hero::before{content:"";position:absolute;inset:-20% -10% auto;height:900px;background:radial-gradient(600px 400px at 20% 20%,rgba(34,211,238,.16),transparent 70%),radial-gradient(700px 500px at 80% 10%,rgba(139,92,246,.18),transparent 70%);pointer-events:none}
-.hero::after{content:"";position:absolute;inset:0;background-image:linear-gradient(rgba(148,163,184,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(148,163,184,.05) 1px,transparent 1px);background-size:56px 56px;mask-image:radial-gradient(ellipse at 50% 0%,#000 30%,transparent 75%);pointer-events:none}
-.hero .wrap{position:relative;z-index:1;text-align:center}
-.hero h1{font-size:clamp(40px,6.2vw,74px);line-height:1.04;font-weight:800;letter-spacing:-.035em;margin:26px auto 22px;max-width:980px}
-.hero p.lead{font-size:clamp(17px,2vw,20px);color:var(--mut);max-width:720px;margin:0 auto 38px}
-.hero-ctas{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
-.hero-meta{display:flex;gap:28px;justify-content:center;flex-wrap:wrap;margin-top:28px;color:var(--dim);font-size:14px}
-.hero-meta span{display:flex;align-items:center;gap:8px}
-.hero-meta svg{width:16px;height:16px;color:var(--ok)}
+/* product header */
+.ph{border-bottom:1px solid var(--line);background:radial-gradient(900px 340px at 15% -20%,rgba(99,102,241,.22),transparent 70%),radial-gradient(700px 300px at 90% -30%,rgba(34,211,238,.14),transparent 70%)}
+.ph .wrap{padding-top:34px;padding-bottom:0}
+.crumb{font-size:14px;color:var(--mut);display:flex;gap:8px;align-items:center;margin-bottom:18px}
+.crumb b{color:var(--txt)}
+.ph-main{display:flex;gap:22px;align-items:flex-start;flex-wrap:wrap}
+.ph-icon{flex:none;width:72px;height:72px;border-radius:18px;background:var(--grad);display:grid;place-items:center;box-shadow:0 18px 50px -18px rgba(99,102,241,.9)}
+.ph-icon svg{width:40px;height:40px}
+.ph-txt{flex:1;min-width:280px}
+.ph-txt h1{font-size:clamp(26px,3.2vw,34px);font-weight:800;letter-spacing:-.02em;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.ph-txt p{color:var(--mut);font-size:16px;max-width:760px;margin-top:6px}
+.ph-meta{display:flex;gap:18px;flex-wrap:wrap;margin-top:14px;font-size:13px;color:var(--mut)}
+.ph-meta span{display:flex;align-items:center;gap:6px}
+.ph-meta svg{width:15px;height:15px;opacity:.8}
+.ph-act{display:flex;gap:10px;flex-wrap:wrap}
+.tabs{display:flex;gap:4px;margin-top:26px;overflow-x:auto;scrollbar-width:none}
+.tabs::-webkit-scrollbar{display:none}
+.tabs a{display:flex;align-items:center;gap:8px;padding:12px 16px;font-size:14px;font-weight:500;color:var(--mut);border-bottom:2px solid transparent;white-space:nowrap}
+.tabs a:hover{color:var(--txt)}
+.tabs a.on{color:var(--txt);border-bottom-color:var(--acc)}
+.tabs svg{width:16px;height:16px;opacity:.8}
+.tabs-bar{position:sticky;top:64px;z-index:40;background:rgba(6,10,19,.92);backdrop-filter:blur(14px);border-bottom:1px solid var(--line);display:none}
+.tabs-bar.show{display:block}
+.tabs-bar .tabs{margin-top:0}
 
-/* app mockup */
-.app{margin:72px auto 0;max-width:1100px;border-radius:18px;border:1px solid var(--line2);background:#0a1222;box-shadow:0 40px 120px -30px rgba(99,102,241,.45),0 0 0 1px rgba(255,255,255,.02) inset;overflow:hidden;text-align:left}
-.app-bar{display:flex;align-items:center;gap:8px;padding:12px 16px;background:#0d1628;border-bottom:1px solid var(--line)}
-.app-bar i{width:12px;height:12px;border-radius:50%;display:block}
-.app-bar .t{margin-left:14px;font-size:13px;color:var(--dim);font-family:var(--mono)}
-.app-tool{display:flex;align-items:center;gap:10px;padding:10px 16px;border-bottom:1px solid var(--line);background:#0b1425}
-.filter{flex:1;display:flex;align-items:center;gap:10px;background:#07101f;border:1px solid #1f4d3a;border-radius:8px;padding:8px 12px;font-family:var(--mono);font-size:13px;color:#86efac}
-.filter b{color:var(--dim);font-weight:400}
-.rec{display:flex;align-items:center;gap:8px;font-size:12px;color:#fca5a5;font-family:var(--mono)}
-.rec::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--err);animation:blink 1.2s infinite}
-@keyframes blink{50%{opacity:.2}}
-.tbl{font-family:var(--mono);font-size:12.5px;max-height:262px;overflow:hidden;position:relative}
-.tbl .row{display:grid;grid-template-columns:60px 110px 150px 150px 80px 64px 1fr;gap:10px;padding:6px 16px;border-bottom:1px solid rgba(30,42,68,.6);white-space:nowrap;animation:fadein .5s both}
-.tbl .row.h{color:var(--dim);background:#0d1628;font-weight:500;position:sticky;top:0;z-index:1}
-.tbl .row span{overflow:hidden;text-overflow:ellipsis}
-.p-tcp{background:rgba(99,102,241,.07)} .p-tls{background:rgba(34,211,238,.07)} .p-dns{background:rgba(168,85,247,.08)} .p-http{background:rgba(34,197,94,.07)} .p-quic{background:rgba(245,158,11,.06)} .p-err{background:rgba(239,68,68,.12);color:#fecaca}
-.row .proto{font-weight:600}
-@keyframes fadein{from{opacity:0;transform:translateY(-6px)}}
-.panes{display:grid;grid-template-columns:1.1fr 1fr;border-top:1px solid var(--line)}
-.pane{padding:14px 16px;font-family:var(--mono);font-size:12px;color:var(--mut);min-height:150px}
-.pane+.pane{border-left:1px solid var(--line)}
-.tree div{padding:2px 0} .tree .k{color:#93c5fd} .tree .v{color:#e2e8f0}
-.hex{color:#7dd3fc;line-height:1.75} .hex em{color:var(--dim);font-style:normal} .hex u{text-decoration:none;color:#f0abfc}
-@media(max-width:860px){.panes{grid-template-columns:1fr}.pane+.pane{border-left:0;border-top:1px solid var(--line)}.tbl .row{grid-template-columns:44px 90px 120px 120px 64px 50px 260px}}
+/* layout */
+.layout{display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:28px;padding:32px 0 80px}
+@media(max-width:980px){.layout{grid-template-columns:minmax(0,1fr)}.side{order:-1}.side .box{display:none}.stick{position:static}}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:var(--r);margin-bottom:24px;overflow:hidden}
+.panel-h{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:16px 22px;border-bottom:1px solid var(--line);background:rgba(255,255,255,.015)}
+.panel-h h2{font-size:16px;font-weight:700;display:flex;align-items:center;gap:10px}
+.panel-h h2 svg{width:18px;height:18px;color:var(--acc)}
+.panel-b{padding:22px}
+.panel-b p{color:var(--mut)}
+.panel-b h3{font-size:18px;margin:26px 0 10px;letter-spacing:-.01em}
+.panel-b h3:first-child{margin-top:0}
+.lead{font-size:16px;color:#c7d2e6!important}
 
-/* logos/stats */
-.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:var(--r);overflow:hidden;margin-top:80px}
-.stat{background:var(--bg2);padding:30px 24px;text-align:center}
-.stat b{display:block;font-size:34px;font-weight:800;letter-spacing:-.02em}
-.stat span{color:var(--mut);font-size:14px}
-@media(max-width:760px){.stats{grid-template-columns:repeat(2,1fr)}}
+/* app shot */
+.shot{border:1px solid var(--line2);border-radius:12px;overflow:hidden;margin:18px 0 6px;background:#0a1120;font-family:var(--mono);font-size:11.5px}
+.shot-bar{display:flex;align-items:center;gap:7px;padding:9px 12px;background:#0e1729;border-bottom:1px solid var(--line)}
+.shot-bar i{width:10px;height:10px;border-radius:50%;background:#334155}
+.shot-bar i:nth-child(1){background:#ef4444}.shot-bar i:nth-child(2){background:#f59e0b}.shot-bar i:nth-child(3){background:#22c55e}
+.shot-bar span{margin-left:10px;color:var(--dim);font-family:Inter,sans-serif;font-size:12px}
+.shot-bar em{margin-left:auto;font-style:normal;color:#fca5a5;font-size:11px;display:flex;align-items:center;gap:6px}
+.shot-bar em:before{content:"";width:7px;height:7px;border-radius:50%;background:#ef4444;box-shadow:0 0 8px #ef4444;animation:blink 1.4s infinite}
+@keyframes blink{50%{opacity:.3}}
+.flt{padding:8px 12px;border-bottom:1px solid var(--line);color:#86efac;background:rgba(34,197,94,.05)}
+.flt b{color:var(--dim);font-weight:400;margin-right:8px}
+.pk{display:grid;grid-template-columns:52px 86px 1fr 1fr 64px 2.4fr;gap:10px;padding:5px 12px;white-space:nowrap;overflow:hidden;border-bottom:1px solid rgba(30,42,68,.5)}
+.pk span{overflow:hidden;text-overflow:ellipsis}
+.pk.hd{color:var(--dim);background:#0c1426;font-family:Inter,sans-serif;font-size:11px;font-weight:600}
+.p-tls{background:rgba(139,92,246,.09)}.p-dns{background:rgba(34,211,238,.07)}.p-tcp{background:rgba(148,163,184,.05)}.p-http{background:rgba(34,197,94,.07)}.p-err{background:rgba(239,68,68,.14);color:#fecaca}.p-quic{background:rgba(245,158,11,.07)}
+@media(max-width:640px){.pk{grid-template-columns:40px 1fr 1fr 56px}.pk span:nth-child(2),.pk span:nth-child(6){display:none}}
 
-/* features */
-.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
-@media(max-width:960px){.grid3{grid-template-columns:repeat(2,1fr)}}
-@media(max-width:640px){.grid3{grid-template-columns:1fr}}
-.card{background:linear-gradient(180deg,var(--card),var(--bg2));border:1px solid var(--line);border-radius:var(--r);padding:30px;transition:.25s;position:relative;overflow:hidden}
-.card:hover{border-color:var(--line2);transform:translateY(-4px)}
-.card::after{content:"";position:absolute;inset:0 0 auto;height:1px;background:linear-gradient(90deg,transparent,rgba(34,211,238,.5),transparent);opacity:0;transition:.3s}
-.card:hover::after{opacity:1}
-.ico{width:48px;height:48px;border-radius:12px;display:grid;place-items:center;background:rgba(99,102,241,.12);border:1px solid rgba(99,102,241,.3);margin-bottom:20px;color:#a5b4fc}
-.ico svg{width:24px;height:24px}
-.card h3{font-size:19px;margin-bottom:10px;font-weight:700}
-.card p{color:var(--mut);font-size:15px}
+.feat{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:18px}
+@media(max-width:640px){.feat{grid-template-columns:1fr}}
+.feat div{border:1px solid var(--line);border-radius:12px;padding:16px;background:var(--bg2)}
+.feat b{display:block;font-size:14px;margin-bottom:4px}
+.feat span{color:var(--mut);font-size:13.5px}
 
-/* split */
-.split{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center}
-.split+.split{margin-top:110px}
-.split.rev .split-txt{order:2}
-@media(max-width:900px){.split{grid-template-columns:1fr;gap:36px}.split.rev .split-txt{order:0}}
-.split h3{font-size:clamp(26px,3vw,36px);line-height:1.2;font-weight:800;letter-spacing:-.02em;margin:12px 0 16px}
-.split p{color:var(--mut);font-size:17px;margin-bottom:22px}
-.checks{list-style:none;display:grid;gap:12px}
-.checks li{display:flex;gap:12px;align-items:flex-start;color:#cbd5e1}
-.checks svg{flex:none;width:20px;height:20px;color:var(--acc);margin-top:2px}
-.panel{background:#0a1222;border:1px solid var(--line2);border-radius:var(--r);padding:22px;font-family:var(--mono);font-size:13px;box-shadow:0 30px 80px -40px rgba(34,211,238,.35)}
-.panel .ttl{display:flex;justify-content:space-between;color:var(--dim);font-size:12px;margin-bottom:14px;font-family:Inter,sans-serif;font-weight:500}
-.chat .c{padding:7px 10px;border-radius:8px;margin:6px 0;white-space:pre-wrap;word-break:break-all}
-.chat .cli{background:rgba(239,68,68,.08);color:#fca5a5;border-left:2px solid #ef4444}
-.chat .srv{background:rgba(59,130,246,.08);color:#93c5fd;border-left:2px solid #3b82f6}
-.exp div{display:grid;grid-template-columns:86px 1fr 54px;gap:10px;padding:9px 0;border-bottom:1px solid var(--line);align-items:center}
-.sev{font-size:11px;padding:2px 8px;border-radius:6px;text-align:center;font-weight:600}
-.s-e{background:rgba(239,68,68,.15);color:#fca5a5}.s-w{background:rgba(245,158,11,.15);color:#fcd34d}.s-n{background:rgba(34,211,238,.12);color:#67e8f9}.s-c{background:rgba(148,163,184,.12);color:#cbd5e1}
-.exp b{color:var(--txt);font-weight:500;text-align:right}
-.bars{display:flex;align-items:flex-end;gap:5px;height:140px;margin-top:8px}
-.bars i{flex:1;border-radius:4px 4px 0 0;background:var(--grad);opacity:.85}
+/* code */
+.seg{display:inline-flex;gap:4px;padding:4px;border-radius:10px;background:var(--bg2);border:1px solid var(--line);margin-bottom:12px}
+.seg button{background:none;border:0;color:var(--mut);padding:7px 14px;border-radius:7px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit}
+.seg button.on{background:var(--card2);color:var(--txt);box-shadow:inset 0 0 0 1px var(--line2)}
+.code{position:relative;background:#081020;border:1px solid var(--line);border-radius:10px;padding:16px 18px;font-family:var(--mono);font-size:13px;line-height:1.75;color:#cbd5e1;overflow-x:auto;white-space:pre;margin-bottom:12px}
+.code .c{color:#64748b}.code .k{color:#22d3ee}.code .s{color:#86efac}.code .f{color:#c4b5fd}
+.code .cp{position:absolute;top:10px;right:10px;font-family:Inter,sans-serif}
+.steps{counter-reset:s;list-style:none;margin-top:6px}
+.steps li{counter-increment:s;position:relative;padding:0 0 18px 44px;color:var(--mut)}
+.steps li:before{content:counter(s);position:absolute;left:0;top:-2px;width:28px;height:28px;border-radius:50%;display:grid;place-items:center;font-size:13px;font-weight:700;color:#fff;background:var(--grad)}
+.steps li b{color:var(--txt)}
+table{width:100%;border-collapse:collapse;font-size:14px}
+th,td{text-align:left;padding:11px 14px;border-bottom:1px solid var(--line);vertical-align:top}
+th{color:var(--dim);font-weight:600;font-size:12px;text-transform:uppercase;letter-spacing:.06em;background:rgba(255,255,255,.015)}
+td{color:#c7d2e6}
+td code{font-family:var(--mono);font-size:12.5px;color:#a5f3fc;background:rgba(34,211,238,.07);padding:2px 7px;border-radius:6px;white-space:nowrap}
+.tbl-wrap{border:1px solid var(--line);border-radius:12px;overflow:auto}
+.tbl-wrap tr:last-child td{border-bottom:0}
 
-/* protocols */
-.protos{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;max-width:960px;margin:0 auto}
-.protos span{padding:9px 16px;border-radius:10px;border:1px solid var(--line);background:var(--card);font-family:var(--mono);font-size:13px;color:#cbd5e1;transition:.2s}
-.protos span:hover{border-color:var(--acc);color:#fff}
-.platforms{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;margin-top:48px}
-.plat{display:flex;align-items:center;gap:12px;padding:16px 24px;border-radius:14px;border:1px solid var(--line);background:var(--bg2);font-weight:600}
-.plat svg{width:26px;height:26px}
-.plat small{display:block;color:var(--dim);font-weight:400;font-size:12px}
+/* releases */
+.rel{border-bottom:1px solid var(--line)}
+.rel:last-child{border-bottom:0}
+.rel-h{display:flex;align-items:center;gap:12px;flex-wrap:wrap;padding:18px 22px}
+.rel-h h3{font-size:18px;margin:0}
+.rel-h time{color:var(--dim);font-size:13px;margin-left:auto}
+.rel-b{padding:0 22px 22px}
+.rel-b ul{margin:0 0 16px 18px;color:var(--mut);font-size:14.5px}
+.rel-b li{margin-bottom:5px}
+.rel-b li b{color:var(--txt);font-weight:600}
+.assets{border:1px solid var(--line);border-radius:10px;overflow:hidden}
+.asset{display:flex;align-items:center;gap:12px;padding:11px 14px;border-bottom:1px solid var(--line);font-size:14px;cursor:pointer;transition:.15s;background:none;color:inherit;width:100%;border-left:0;border-right:0;border-top:0;font-family:inherit;text-align:left}
+.asset:last-child{border-bottom:0}
+.asset:hover{background:rgba(255,255,255,.03)}
+.asset svg{width:17px;height:17px;flex:none;color:var(--mut)}
+.asset .n{font-family:var(--mono);font-size:13px;flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.asset .sz{color:var(--dim);font-size:13px;flex:none}
+.asset .lk{flex:none;display:flex;align-items:center;gap:6px;color:#c4b5fd;font-size:12px;font-weight:600}
+.asset .lk svg{width:14px;height:14px;color:#c4b5fd}
+@media(max-width:560px){.asset .sz{display:none}}
+details.rel summary{list-style:none;cursor:pointer}
+details.rel summary::-webkit-details-marker{display:none}
+details.rel summary .chev{width:16px;height:16px;color:var(--dim);transition:.2s}
+details.rel[open] summary .chev{transform:rotate(90deg)}
 
-/* pricing */
-.price-wrap{display:grid;grid-template-columns:1.15fr 1fr;gap:0;max-width:1000px;margin:0 auto;border-radius:22px;overflow:hidden;border:1px solid var(--line2);background:var(--card);box-shadow:0 40px 120px -40px rgba(139,92,246,.5)}
-@media(max-width:860px){.price-wrap{grid-template-columns:1fr}}
-.price-l{padding:44px}
-.price-r{padding:44px;background:linear-gradient(160deg,rgba(34,211,238,.1),rgba(139,92,246,.14));border-left:1px solid var(--line2);display:flex;flex-direction:column;justify-content:center}
-@media(max-width:860px){.price-r{border-left:0;border-top:1px solid var(--line2)}}
-.tag{display:inline-block;font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#c4b5fd;background:rgba(139,92,246,.15);border:1px solid rgba(139,92,246,.35);padding:5px 12px;border-radius:999px}
-.price-l h3{font-size:28px;margin:16px 0 8px;font-weight:800}
-.price-l p{color:var(--mut);margin-bottom:26px}
-.inc{display:grid;grid-template-columns:1fr 1fr;gap:12px 18px;list-style:none}
-@media(max-width:560px){.inc{grid-template-columns:1fr}}
-.inc li{display:flex;gap:10px;font-size:15px;color:#cbd5e1}
-.inc svg{flex:none;width:18px;height:18px;color:var(--ok);margin-top:3px}
-.amount{font-size:68px;font-weight:800;letter-spacing:-.04em;line-height:1}
-.amount sup{font-size:28px;vertical-align:top;margin-right:4px;position:relative;top:10px}
-.amount small{font-size:16px;color:var(--mut);font-weight:500;letter-spacing:0}
-.once{color:var(--mut);margin:10px 0 26px}
-.coins{display:flex;gap:10px;margin-top:22px;justify-content:center;flex-wrap:wrap}
-.coin{display:flex;align-items:center;gap:7px;font-size:13px;color:var(--mut);padding:6px 11px;border:1px solid var(--line2);border-radius:999px;background:rgba(0,0,0,.2)}
-.coin i{width:18px;height:18px;border-radius:50%;display:grid;place-items:center;font-style:normal;font-weight:700;font-size:10px;color:#fff}
-.secure{display:flex;align-items:center;justify-content:center;gap:8px;color:var(--dim);font-size:13px;margin-top:18px}
-.secure svg{width:15px;height:15px}
-
-/* steps */
-.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-top:56px}
-@media(max-width:860px){.steps{grid-template-columns:repeat(2,1fr)}}
-@media(max-width:520px){.steps{grid-template-columns:1fr}}
-.step{padding:24px;border-radius:14px;border:1px solid var(--line);background:var(--bg2)}
-.step b{display:inline-grid;place-items:center;width:32px;height:32px;border-radius:9px;background:var(--grad);font-size:14px;margin-bottom:14px}
-.step h4{font-size:16px;margin-bottom:6px}
-.step p{color:var(--mut);font-size:14px}
+/* side */
+.side{display:flex;flex-direction:column;gap:20px}
+.stick{position:sticky;top:132px;display:flex;flex-direction:column;gap:20px}
+.lic{border:1px solid var(--line2);border-radius:var(--r);background:radial-gradient(400px 200px at 50% -20%,rgba(99,102,241,.28),transparent 70%),var(--card);padding:22px;position:relative;overflow:hidden}
+.lic:before{content:"";position:absolute;inset:0 0 auto 0;height:3px;background:var(--grad)}
+.lic small{color:var(--mut);font-size:13px;font-weight:600;text-transform:uppercase;letter-spacing:.08em}
+.price{display:flex;align-items:baseline;gap:8px;margin:6px 0 2px}
+.price b{font-size:40px;font-weight:800;letter-spacing:-.03em}
+.price span{color:var(--mut);font-size:14px}
+.lic .once{color:var(--dim);font-size:13px;margin-bottom:16px}
+.lic ul{list-style:none;margin:16px 0 0;font-size:14px;color:#c7d2e6}
+.lic li{display:flex;gap:10px;margin-bottom:9px}
+.lic li svg{flex:none;width:17px;height:17px;color:var(--ok);margin-top:2px}
+.coins{display:flex;gap:8px;align-items:center;margin-top:16px;padding-top:16px;border-top:1px solid var(--line);font-size:12.5px;color:var(--dim)}
+.coins i{width:24px;height:24px;border-radius:50%;display:grid;place-items:center;font-style:normal;font-weight:800;font-size:11px;color:#fff}
+.box{border:1px solid var(--line);border-radius:var(--r);background:var(--card);padding:20px 22px}
+.box h4{font-size:13px;text-transform:uppercase;letter-spacing:.08em;color:var(--dim);margin-bottom:12px}
+.kvl{display:flex;justify-content:space-between;gap:12px;font-size:14px;padding:7px 0;border-bottom:1px dashed var(--line)}
+.kvl:last-child{border-bottom:0}
+.kvl span{color:var(--mut)}
+.kvl b{font-weight:600;text-align:right}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chips span{font-family:var(--mono);font-size:12px;padding:4px 9px;border-radius:6px;background:var(--bg2);border:1px solid var(--line);color:#c7d2e6}
 
 /* faq */
-.faq{max-width:820px;margin:0 auto}
-.faq details{border:1px solid var(--line);border-radius:14px;background:var(--bg2);margin-bottom:12px;transition:.2s}
-.faq details[open]{border-color:var(--line2);background:var(--card)}
-.faq summary{list-style:none;cursor:pointer;padding:20px 24px;font-weight:600;font-size:16px;display:flex;justify-content:space-between;align-items:center;gap:16px}
+.faq details{border-bottom:1px solid var(--line)}
+.faq details:last-child{border-bottom:0}
+.faq summary{list-style:none;cursor:pointer;padding:16px 22px;font-weight:600;font-size:15px;display:flex;justify-content:space-between;gap:16px}
 .faq summary::-webkit-details-marker{display:none}
-.faq summary::after{content:"+";font-size:22px;color:var(--acc);transition:.2s;flex:none}
-.faq details[open] summary::after{transform:rotate(45deg)}
-.faq details p{padding:0 24px 22px;color:var(--mut)}
+.faq summary:after{content:"+";color:var(--acc);font-size:20px;line-height:1}
+.faq details[open] summary:after{content:"−"}
+.faq details p{padding:0 22px 18px;color:var(--mut);font-size:14.5px}
 
-/* cta + footer */
-.cta{text-align:center;border-radius:24px;padding:72px 32px;background:radial-gradient(600px 300px at 50% 0%,rgba(99,102,241,.35),transparent 70%),var(--card);border:1px solid var(--line2)}
-.cta h2{font-size:clamp(28px,4vw,42px);font-weight:800;letter-spacing:-.02em;margin-bottom:14px}
-.cta p{color:var(--mut);font-size:18px;margin-bottom:30px}
-footer{border-top:1px solid var(--line);padding:56px 0 40px;color:var(--dim);font-size:14px}
-.foot{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:32px}
-@media(max-width:760px){.foot{grid-template-columns:1fr 1fr}}
-.foot h5{color:var(--txt);font-size:14px;margin-bottom:14px}
-.foot a{display:block;margin-bottom:9px}.foot a:hover{color:var(--txt)}
-.legal{border-top:1px solid var(--line);margin-top:40px;padding-top:24px;display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;font-size:13px}
-
-/* reveal */
-.rv{opacity:0;transform:translateY(24px);transition:opacity .7s ease,transform .7s ease}
-.rv.in{opacity:1;transform:none}
+footer{border-top:1px solid var(--line);padding:36px 0 40px;color:var(--dim);font-size:13px}
+footer .wrap{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
+footer nav{display:flex;gap:18px}
+footer a:hover{color:var(--txt)}
 
 /* modal */
 .ov{position:fixed;inset:0;z-index:100;background:rgba(2,6,15,.78);backdrop-filter:blur(8px);display:none;align-items:center;justify-content:center;padding:20px}
@@ -245,268 +242,242 @@ footer{border-top:1px solid var(--line);padding:56px 0 40px;color:var(--dim);fon
 </style>
 </head>
 <body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-logo" viewBox="0 0 32 32"><defs><linearGradient id="lg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#22d3ee"/><stop offset=".55" stop-color="#6366f1"/><stop offset="1" stop-color="#a855f7"/></linearGradient></defs><path d="M16 2 28 9v14l-12 7L4 23V9z" fill="url(#lg)"/><path d="M9 17h3l2-5 3 9 2-6 1 2h3" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-wave" viewBox="0 0 24 24"><path d="M2 13h4l3-8 5 15 3-9 2 4h3" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-book" viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20V3H6.5A2.5 2.5 0 0 0 4 5.5z M4 19.5A2.5 2.5 0 0 0 6.5 22H20v-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></symbol>
+  <symbol id="i-tag" viewBox="0 0 24 24"><path d="M20.6 13.4 13.4 20.6a2 2 0 0 1-2.8 0L3 13V3h10l7.6 7.6a2 2 0 0 1 0 2.8z M7.5 7.5h.01" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-term" viewBox="0 0 24 24"><path d="m4 17 6-5-6-5M12 19h8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-cpu" viewBox="0 0 24 24"><rect x="5" y="5" width="14" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="2"/><path d="M9 1v4M15 1v4M9 19v4M15 19v4M1 9h4M1 15h4M19 9h4M19 15h4" stroke="currentColor" stroke-width="2"/></symbol>
+  <symbol id="i-key" viewBox="0 0 24 24"><circle cx="7.5" cy="15.5" r="4.5" fill="none" stroke="currentColor" stroke-width="2"/><path d="m10.7 12.3 9.8-9.8M17 6l3 3M14.5 8.5l2.5 2.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+  <symbol id="i-help" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/><path d="M9.1 9a3 3 0 0 1 5.8 1c0 2-3 3-3 3M12 17h.01" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+  <symbol id="i-pkg" viewBox="0 0 24 24"><path d="m21 8-9-5-9 5v8l9 5 9-5z M3 8l9 5 9-5M12 13v8" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></symbol>
+  <symbol id="i-lock" viewBox="0 0 24 24"><rect x="4" y="11" width="16" height="10" rx="2" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4" fill="none" stroke="currentColor" stroke-width="2"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-cal" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" fill="none" stroke="currentColor" stroke-width="2"/><path d="M16 2v4M8 2v4M3 10h18" stroke="currentColor" stroke-width="2"/></symbol>
+  <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></symbol>
+  <symbol id="i-mon" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 21h8M12 17v4" stroke="currentColor" stroke-width="2"/></symbol>
+  <symbol id="i-chev" viewBox="0 0 24 24"><path d="m9 18 6-6-6-6" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+</svg>
 
-<nav id="nav">
+<header class="top">
   <div class="wrap">
-    <a href="#" class="logo">
-      <svg viewBox="0 0 32 32" fill="none"><defs><linearGradient id="lg" x1="0" y1="0" x2="32" y2="32"><stop stop-color="#22d3ee"/><stop offset=".55" stop-color="#6366f1"/><stop offset="1" stop-color="#a855f7"/></linearGradient></defs><rect width="32" height="32" rx="9" fill="url(#lg)"/><path d="M6 17h4l3-7 4 13 3-8 2 2h4" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      Netrova
-    </a>
-    <div class="nav-links">
-      <a href="#features">Features</a><a href="#capabilities">Capabilities</a><a href="#protocols">Protocols</a><a href="#pricing">Pricing</a><a href="#faq">FAQ</a>
-    </div>
-    <button class="btn btn-pri nav-cta" data-buy>Buy License</button>
-  </div>
-</nav>
-
-<header class="hero">
-  <div class="wrap">
-    <span class="pill"><span class="dot"></span> Netrova Analyzer Pro 4.2 is now available</span>
-    <h1>See every packet.<br><span class="grad-txt">Solve every network problem.</span></h1>
-    <p class="lead">A professional-grade protocol analyzer for network engineers, security teams and developers. Capture live traffic, dissect hundreds of protocols and pinpoint the root cause in minutes, not hours.</p>
-    <div class="hero-ctas">
-      <button class="btn btn-pri" data-buy>Get Lifetime License — $1,270
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M13 5l7 7-7 7"/></svg></button>
-      <a href="#features" class="btn btn-ghost">Explore features</a>
-    </div>
-    <div class="hero-meta">
-      <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg>One-time payment</span>
-      <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg>Windows, macOS &amp; Linux</span>
-      <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg>Free updates for life</span>
-    </div>
-
-    <div class="app rv">
-      <div class="app-bar"><i style="background:#ef4444"></i><i style="background:#f59e0b"></i><i style="background:#22c55e"></i><span class="t">Netrova Analyzer Pro — capture on en0 (Wi-Fi)</span></div>
-      <div class="app-tool">
-        <div class="filter"><b>Filter</b> tcp.port == 443 || dns || http</div>
-        <div class="rec" id="pc">REC · 0 packets</div>
-      </div>
-      <div class="tbl" id="tbl">
-        <div class="row h"><span>No.</span><span>Time</span><span>Source</span><span>Destination</span><span>Proto</span><span>Len</span><span>Info</span></div>
-      </div>
-      <div class="panes">
-        <div class="pane tree">
-          <div>▾ <span class="k">Frame 1842:</span> <span class="v">583 bytes on wire (4664 bits)</span></div>
-          <div>▾ <span class="k">Ethernet II,</span> <span class="v">Src: a4:83:e7:1c:02:9f, Dst: 3c:22:fb:41:aa:10</span></div>
-          <div>▾ <span class="k">Internet Protocol Version 4,</span> <span class="v">Src: 10.0.1.24, Dst: 104.18.32.7</span></div>
-          <div>▾ <span class="k">Transmission Control Protocol,</span> <span class="v">Src Port: 53122, Dst Port: 443, Seq: 1, Ack: 1, Len: 517</span></div>
-          <div>&nbsp;&nbsp;▾ <span class="k">Transport Layer Security</span></div>
-          <div>&nbsp;&nbsp;&nbsp;&nbsp;<span class="k">Handshake Type:</span> <span class="v">Client Hello (1)</span></div>
-          <div>&nbsp;&nbsp;&nbsp;&nbsp;<span class="k">Server Name:</span> <span class="v">api.example.com</span></div>
-        </div>
-        <div class="pane hex">
-          <div><em>0000</em>&nbsp; 3c 22 fb 41 aa 10 a4 83 &nbsp;e7 1c 02 9f 08 00 45 00</div>
-          <div><em>0010</em>&nbsp; 02 39 8a 4f 40 00 40 06 &nbsp;00 00 0a 00 01 18 68 12</div>
-          <div><em>0020</em>&nbsp; 20 07 cf 82 01 bb 6e 1a &nbsp;44 c2 9b 07 51 d3 80 18</div>
-          <div><em>0030</em>&nbsp; 08 0a <u>16 03 01 02 00 01</u> &nbsp;<u>00 01 fc 03 03 5f 9a 21</u></div>
-          <div><em>0040</em>&nbsp; c4 7e 33 0b a1 92 58 de &nbsp;11 6f 70 2c 8e e4 b3 0a</div>
-          <div><em>0050</em>&nbsp; 2d 61 70 69 2e 65 78 61 &nbsp;6d 70 6c 65 2e 63 6f 6d</div>
-        </div>
-      </div>
-    </div>
-
-    <div class="stats rv">
-      <div class="stat"><b class="grad-txt">1,800+</b><span>Protocol dissectors</span></div>
-      <div class="stat"><b class="grad-txt">10 Gbps</b><span>Line-rate capture</span></div>
-      <div class="stat"><b class="grad-txt">&lt; 1 s</b><span>Filter on 1M packets</span></div>
-      <div class="stat"><b class="grad-txt">3</b><span>Desktop platforms</span></div>
+    <a class="brand" href="#overview"><svg><use href="#i-logo"/></svg>Netrova <span class="hub">HUB</span></a>
+    <nav>
+      <a href="#overview">Product</a>
+      <a href="#releases">Releases</a>
+      <a href="#docs">Documentation</a>
+      <a href="#license">Licensing</a>
+      <a data-mail>Support</a>
+    </nav>
+    <div class="r">
+      <a class="btn btn-ghost btn-sm" data-mail>Contact sales</a>
+      <button class="btn btn-pri btn-sm" data-buy>Get License</button>
     </div>
   </div>
 </header>
 
-<section id="features">
+<div class="ph">
   <div class="wrap">
-    <div class="sec-head rv">
-      <div class="eyebrow">Features</div>
-      <h2>Everything you need to understand your network</h2>
-      <p>From a quick DNS check to a multi-gigabyte incident investigation, Netrova gives you complete visibility at every layer.</p>
-    </div>
-    <div class="grid3">
-      <div class="card rv"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M4.9 19.1 7 17M17 7l2.1-2.1"/></svg></div><h3>Live Packet Capture</h3><p>Capture from Ethernet, Wi-Fi, loopback, USB and VPN interfaces with ring buffers, auto-rotation and zero-drop buffering at line rate.</p></div>
-      <div class="card rv"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h12"/></svg></div><h3>Deep Protocol Dissection</h3><p>Over 1,800 dissectors decode every field of every layer — from Ethernet frames to application payloads — in a navigable tree.</p></div>
-      <div class="card rv"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 3H2l8 9.5V19l4 2v-8.5L22 3z"/></svg></div><h3>Powerful Display Filters</h3><p>An expressive filter language with autocomplete and syntax checking. Isolate exactly the traffic you care about in milliseconds.</p></div>
-      <div class="card rv"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div><h3>TLS &amp; QUIC Decryption</h3><p>Decrypt TLS 1.2/1.3 and QUIC sessions with key-log files or RSA keys to inspect HTTPS, HTTP/2 and HTTP/3 traffic in clear text.</p></div>
-      <div class="card rv"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"/><path d="m7 15 4-4 3 3 6-6"/></svg></div><h3>Statistics &amp; Graphs</h3><p>I/O graphs, conversation and endpoint tables, protocol hierarchy, flow diagrams and TCP stream graphs — all exportable.</p></div>
-      <div class="card rv"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 9v4M12 17h.01"/><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/></svg></div><h3>Expert Diagnostics</h3><p>Automatic detection of retransmissions, zero windows, out-of-order segments, malformed packets and latency spikes.</p></div>
-    </div>
-  </div>
-</section>
-
-<section id="capabilities" style="background:linear-gradient(180deg,transparent,var(--bg2) 20%,var(--bg2) 80%,transparent)">
-  <div class="wrap">
-    <div class="split">
-      <div class="split-txt rv">
-        <div class="sec-head" style="text-align:left;margin:0"><div class="eyebrow">Stream Reassembly</div></div>
-        <h3>Follow any conversation from first byte to last</h3>
-        <p>Reassemble TCP, UDP, TLS, HTTP/2 and QUIC streams into a readable, color-coded dialogue between client and server. Export payloads, extract transferred files and search inside streams.</p>
-        <ul class="checks">
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg>Follow TCP, UDP, TLS, HTTP and QUIC streams</li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg>Export objects from HTTP, SMB, FTP and IMF</li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg>ASCII, hex, C array, raw and YAML views</li>
-        </ul>
-      </div>
-      <div class="panel chat rv">
-        <div class="ttl"><span>Follow TLS Stream (tcp.stream eq 14)</span><span>2 client pkts · 3 server pkts</span></div>
-        <div class="c cli">GET /v2/orders?status=open HTTP/1.1
-Host: api.example.com
-Authorization: Bearer ••••••••
-Accept: application/json</div>
-        <div class="c srv">HTTP/1.1 200 OK
-Content-Type: application/json
-Content-Length: 1184
-X-Response-Time: 42ms</div>
-        <div class="c srv">{"orders":[{"id":"A-20931","status":"open","total":349.00}, …]}</div>
-      </div>
-    </div>
-
-    <div class="split rev">
-      <div class="split-txt rv">
-        <div class="sec-head" style="text-align:left;margin:0"><div class="eyebrow">Expert Information</div></div>
-        <h3>Find the root cause before your users notice</h3>
-        <p>Netrova's expert engine continuously analyzes every capture and surfaces problems by severity, so you can jump straight to the packets that matter.</p>
-        <ul class="checks">
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg>Retransmission, duplicate ACK and zero-window detection</li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg>DNS failures, TLS alerts and HTTP error tracking</li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg>Round-trip time and throughput analysis per stream</li>
-        </ul>
-      </div>
-      <div class="panel rv">
-        <div class="ttl"><span>Expert Information</span><span>capture-0417.pcapng</span></div>
-        <div class="exp">
-          <div><span class="sev s-e">Error</span><span>Malformed packet (DNS)</span><b>3</b></div>
-          <div><span class="sev s-w">Warning</span><span>TCP previous segment not captured</span><b>27</b></div>
-          <div><span class="sev s-w">Warning</span><span>TCP zero window</span><b>11</b></div>
-          <div><span class="sev s-n">Note</span><span>TCP retransmission</span><b>148</b></div>
-          <div><span class="sev s-n">Note</span><span>TCP duplicate ACK</span><b>96</b></div>
-          <div style="border:0"><span class="sev s-c">Chat</span><span>TLS Client Hello (SNI)</span><b>412</b></div>
+    <div class="crumb">Netrova <span>/</span> Products <span>/</span> <b>Analyzer Pro</b></div>
+    <div class="ph-main">
+      <div class="ph-icon"><svg><use href="#i-wave"/></svg></div>
+      <div class="ph-txt">
+        <h1>Netrova Analyzer Pro <span class="tag ok">v4.2.0 · Stable</span> <span class="tag vio">Commercial</span></h1>
+        <p>Professional network protocol analyzer for live packet capture, deep protocol dissection, TLS decryption, stream reassembly and expert diagnostics.</p>
+        <div class="ph-meta">
+          <span><svg><use href="#i-cal"/></svg>Latest release Oct 28, 2026</span>
+          <span><svg><use href="#i-mon"/></svg>Windows · macOS · Linux</span>
+          <span><svg><use href="#i-shield"/></svg>Signed installers</span>
+          <span><svg><use href="#i-key"/></svg>Lifetime license</span>
         </div>
       </div>
-    </div>
-
-    <div class="split">
-      <div class="split-txt rv">
-        <div class="sec-head" style="text-align:left;margin:0"><div class="eyebrow">Performance</div></div>
-        <h3>Built for captures measured in gigabytes</h3>
-        <p>A multi-threaded engine indexes packets as they arrive, so filtering, sorting and searching stay instant even on multi-million-packet captures.</p>
-        <ul class="checks">
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg>Open and merge pcap, pcapng and 30+ capture formats</li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg>Command-line capture and batch export for automation</li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg>Export to CSV, JSON, PDML, PSML and plain text</li>
-        </ul>
-      </div>
-      <div class="panel rv">
-        <div class="ttl"><span>I/O Graph · packets/s</span><span>interval 100 ms</span></div>
-        <div class="bars" id="bars"></div>
+      <div class="ph-act">
+        <a class="btn btn-ghost" href="#releases"><svg width="16" height="16"><use href="#i-pkg"/></svg>Releases</a>
+        <button class="btn btn-pri" data-buy><svg width="16" height="16"><use href="#i-key"/></svg>Buy License — $1,270</button>
       </div>
     </div>
-  </div>
-</section>
-
-<section id="protocols">
-  <div class="wrap">
-    <div class="sec-head rv">
-      <div class="eyebrow">Protocols &amp; Platforms</div>
-      <h2>Speaks every protocol on your network</h2>
-      <p>From core internet protocols to industrial, telecom and enterprise traffic.</p>
-    </div>
-    <div class="protos rv">
-      <span>Ethernet</span><span>802.11</span><span>VLAN</span><span>ARP</span><span>IPv4</span><span>IPv6</span><span>ICMP</span><span>TCP</span><span>UDP</span><span>SCTP</span><span>DNS</span><span>DHCP</span><span>HTTP/1.1</span><span>HTTP/2</span><span>HTTP/3</span><span>QUIC</span><span>TLS 1.3</span><span>SSH</span><span>SMB2/3</span><span>NFS</span><span>FTP</span><span>SMTP</span><span>IMAP</span><span>LDAP</span><span>Kerberos</span><span>RADIUS</span><span>BGP</span><span>OSPF</span><span>SNMP</span><span>SIP</span><span>RTP</span><span>MQTT</span><span>Modbus</span><span>gRPC</span><span>WebSocket</span><span>PostgreSQL</span><span>MySQL</span><span>Redis</span><span>+1,750 more</span>
-    </div>
-    <div class="platforms rv">
-      <div class="plat"><svg viewBox="0 0 24 24" fill="#60a5fa"><path d="M3 5.5 10.5 4.5v7H3zM11.5 4.4 21 3v8.5h-9.5zM3 12.5h7.5v7L3 18.5zM11.5 12.5H21V21l-9.5-1.4z"/></svg><div>Windows<small>10, 11, Server 2019+</small></div></div>
-      <div class="plat"><svg viewBox="0 0 24 24" fill="#e5e7eb"><path d="M16.4 12.6c0-2.4 2-3.6 2.1-3.6-1.1-1.7-2.9-1.9-3.5-1.9-1.5-.2-2.9.9-3.7.9s-1.9-.9-3.2-.8c-1.6 0-3.1 1-4 2.4-1.7 3-.4 7.4 1.2 9.8.8 1.2 1.8 2.5 3 2.4 1.2 0 1.7-.8 3.2-.8s1.9.8 3.2.8c1.3 0 2.2-1.2 3-2.4.9-1.4 1.3-2.7 1.3-2.8 0 0-2.6-1-2.6-4zM14 5.4c.7-.8 1.1-1.9 1-3-1 0-2.1.7-2.8 1.5-.6.7-1.2 1.8-1 2.9 1 .1 2.1-.6 2.8-1.4z"/></svg><div>macOS<small>12 Monterey+, Apple silicon</small></div></div>
-      <div class="plat"><svg viewBox="0 0 24 24" fill="#fbbf24"><path d="M12 2c-2 0-3.3 1.7-3.3 4.2 0 1.3.3 2.2-.4 3.4-.9 1.4-3 3.9-3 6.6 0 .8.2 1.5.5 2-.6.3-1.6.7-1.6 1.6 0 1.2 2.4 1.2 3.6 1.7 1 .4 1.6.5 2.2-.2.4-.4 1.2-.6 2-.6s1.6.2 2 .6c.6.7 1.2.6 2.2.2 1.2-.5 3.6-.5 3.6-1.7 0-.9-1-1.3-1.6-1.6.3-.5.5-1.2.5-2 0-2.7-2.1-5.2-3-6.6-.7-1.2-.4-2.1-.4-3.4C15.3 3.7 14 2 12 2z"/></svg><div>Linux<small>Ubuntu, Debian, RHEL, Fedora</small></div></div>
+    <div class="tabs" id="tabs">
+      <a href="#overview" class="on"><svg><use href="#i-book"/></svg>Overview</a>
+      <a href="#releases"><svg><use href="#i-tag"/></svg>Releases</a>
+      <a href="#docs"><svg><use href="#i-term"/></svg>Documentation</a>
+      <a href="#requirements"><svg><use href="#i-cpu"/></svg>Requirements</a>
+      <a href="#license"><svg><use href="#i-key"/></svg>License</a>
+      <a href="#faq"><svg><use href="#i-help"/></svg>FAQ</a>
     </div>
   </div>
-</section>
+</div>
+<div class="tabs-bar" id="tabs-bar"><div class="wrap"><div class="tabs"></div></div></div>
 
-<section id="pricing">
-  <div class="wrap">
-    <div class="sec-head rv">
-      <div class="eyebrow">Pricing</div>
-      <h2>One license. Lifetime access.</h2>
-      <p>No subscriptions, no renewals. Pay once and own Netrova Analyzer Pro forever.</p>
-    </div>
-    <div class="price-wrap rv">
-      <div class="price-l">
-        <span class="tag">Professional</span>
-        <h3>Netrova Analyzer Pro</h3>
-        <p>The complete toolkit for engineers who need answers from their network data.</p>
-        <ul class="inc">
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg>Lifetime license, 1 user</li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg>Activate on up to 3 devices</li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg>Windows, macOS &amp; Linux builds</li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg>All 1,800+ protocol dissectors</li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg>TLS &amp; QUIC decryption</li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg>Expert diagnostics engine</li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg>Command-line tools &amp; automation</li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg>Free updates for life</li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg>Priority email support</li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg>Commercial use permitted</li>
-        </ul>
-      </div>
-      <div class="price-r" style="text-align:center">
-        <div class="amount"><sup>$</sup>1,270<small> USD</small></div>
-        <div class="once">One-time payment · Lifetime license</div>
-        <button class="btn btn-pri" data-buy style="width:100%;padding:17px">Buy with Crypto</button>
-        <div class="coins">
-          <span class="coin"><i style="background:#26a17b">₮</i>USDT</span>
-          <span class="coin"><i style="background:#f7931a">₿</i>BTC</span>
-          <span class="coin"><i style="background:#627eea">Ξ</i>ETH</span>
-        </div>
-        <div class="secure"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>Payments verified on-chain</div>
-      </div>
-    </div>
+<div class="wrap layout">
+<main>
 
-    <div class="steps">
-      <div class="step rv"><b>1</b><h4>Enter your details</h4><p>Provide your name and the email address where your license will be delivered.</p></div>
-      <div class="step rv"><b>2</b><h4>Choose a cryptocurrency</h4><p>Pay with USDT (TRC20 or ERC20), Bitcoin or Ethereum at the live exchange rate.</p></div>
-      <div class="step rv"><b>3</b><h4>Send the payment</h4><p>Scan the QR code or copy the address and send the exact amount shown.</p></div>
-      <div class="step rv"><b>4</b><h4>Receive your license</h4><p>Submit your transaction hash. Once confirmed on-chain, your license key is issued.</p></div>
+<section class="panel" id="overview">
+  <div class="panel-h"><h2><svg><use href="#i-book"/></svg>Overview</h2><span class="tag">README</span></div>
+  <div class="panel-b">
+    <p class="lead">Netrova Analyzer Pro captures traffic from any interface, decodes every layer of every packet and points you straight at the problem — retransmissions, handshake failures, slow DNS, malformed frames — without leaving a single window.</p>
+    <div class="shot" aria-hidden="true">
+      <div class="shot-bar"><i></i><i></i><i></i><span>Netrova Analyzer Pro — en0</span><em id="pc">REC</em></div>
+      <div class="flt"><b>Filter</b>tcp.port == 443 || dns || quic</div>
+      <div id="tbl"><div class="pk hd"><span>No.</span><span>Time</span><span>Source</span><span>Destination</span><span>Proto</span><span>Info</span></div></div>
+    </div>
+    <div class="feat">
+      <div><b>Live capture</b><span>Capture from Ethernet, Wi-Fi, loopback and VLAN-tagged links with ring buffers and BPF capture filters.</span></div>
+      <div><b>Deep dissection</b><span>Field-level decoding for TCP/IP, TLS 1.3, QUIC, HTTP/2, HTTP/3, DNS, DHCP, SMB, Kerberos and more.</span></div>
+      <div><b>TLS &amp; QUIC decryption</b><span>Load SSLKEYLOGFILE or private keys to inspect encrypted sessions you are authorized to analyze.</span></div>
+      <div><b>Stream reassembly</b><span>Follow TCP, HTTP and QUIC streams as a single conversation and export payloads.</span></div>
+      <div><b>Expert diagnostics</b><span>Automatic detection of retransmissions, zero windows, resets, out-of-order segments and latency spikes.</span></div>
+      <div><b>Open formats</b><span>Reads and writes pcap and pcapng, so captures move freely between your existing tools.</span></div>
     </div>
   </div>
 </section>
 
-<section id="faq" style="padding-top:40px">
-  <div class="wrap">
-    <div class="sec-head rv"><div class="eyebrow">FAQ</div><h2>Frequently asked questions</h2></div>
-    <div class="faq rv">
-      <details open><summary>Is this a subscription?</summary><p>No. Netrova Analyzer Pro is sold as a one-time lifetime license. You pay $1,270 once and receive all future updates at no additional cost.</p></details>
-      <details><summary>Which cryptocurrencies do you accept?</summary><p>We accept USDT on TRON (TRC20) and Ethereum (ERC20), Bitcoin (BTC) and Ethereum (ETH). BTC and ETH amounts are calculated at the live USD exchange rate when you start checkout.</p></details>
-      <details><summary>How long does payment confirmation take?</summary><p>USDT on TRC20 typically confirms within a minute. Ethereum and ERC20 payments take a few minutes, and Bitcoin usually confirms within 10–30 minutes depending on network load. You can check your order status at any time from the checkout window.</p></details>
-      <details><summary>What happens if I send the wrong amount or network?</summary><p>Always send the exact amount on the network shown at checkout. Sending a different token or using another network may result in permanent loss of funds. If you underpay, contact our support team with your order ID.</p></details>
-      <details><summary>On how many devices can I use my license?</summary><p>Each license is for one user and can be activated on up to three devices. You can deactivate a device at any time to move the license to a new machine.</p></details>
-      <details><summary>Do you offer refunds?</summary><p>Because cryptocurrency transactions are irreversible, all refund requests are reviewed individually by our support team. Please contact us before purchasing if you have any questions about compatibility.</p></details>
-      <details><summary>Is it legal to capture network traffic?</summary><p>Netrova is a professional diagnostic tool. You are responsible for only capturing traffic on networks you own or are explicitly authorized to monitor, in accordance with applicable laws.</p></details>
+<section class="panel" id="releases">
+  <div class="panel-h"><h2><svg><use href="#i-tag"/></svg>Releases</h2><span class="tag">Installers unlock with your license key</span></div>
+  <div class="rel">
+    <div class="rel-h"><h3 class="mono">v4.2.0</h3><span class="tag ok">Latest</span><time>Oct 28, 2026</time></div>
+    <div class="rel-b">
+      <ul>
+        <li><b>HTTP/3 &amp; QUIC:</b> full stream view with per-stream timing and decrypted frame inspection.</li>
+        <li><b>Expert panel:</b> new latency heatmap and one-click jump to the slowest handshakes.</li>
+        <li><b>Capture engine:</b> lower CPU usage on sustained high-rate captures with ring buffers.</li>
+        <li><b>Fixes:</b> pcapng comment export, macOS interface permissions prompt, Linux Wayland scaling.</li>
+      </ul>
+      <div class="assets" id="assets"></div>
     </div>
+  </div>
+  <details class="rel">
+    <summary class="rel-h"><svg class="chev"><use href="#i-chev"/></svg><h3 class="mono">v4.1.3</h3><time>Aug 19, 2026</time></summary>
+    <div class="rel-b"><ul>
+      <li><b>Security:</b> hardened dissector sandbox and updated bundled OpenSSL.</li>
+      <li><b>Fixes:</b> SMB3 session setup decoding, IPv6 extension header display, crash on truncated captures.</li>
+    </ul></div>
+  </details>
+  <details class="rel">
+    <summary class="rel-h"><svg class="chev"><use href="#i-chev"/></svg><h3 class="mono">v4.1.0</h3><time>Jun 3, 2026</time></summary>
+    <div class="rel-b"><ul>
+      <li><b>Remote capture:</b> capture on remote Linux hosts over SSH and stream packets into the local UI.</li>
+      <li><b>Profiles:</b> save columns, coloring rules and filters per project.</li>
+      <li><b>CLI:</b> new <code class="mono">netrova-cli stats</code> command for conversation and endpoint summaries.</li>
+    </ul></div>
+  </details>
+</section>
+
+<section class="panel" id="docs">
+  <div class="panel-h"><h2><svg><use href="#i-term"/></svg>Documentation</h2><span class="tag">Quick start</span></div>
+  <div class="panel-b">
+    <h3>Install &amp; activate</h3>
+    <ol class="steps">
+      <li><b>Get a license</b> — complete checkout and your license key is issued to your email.</li>
+      <li><b>Download the installer</b> for your platform from the latest release.</li>
+      <li><b>Activate</b> from the app (Help → Activate License) or from the command line below.</li>
+    </ol>
+    <div class="seg" id="os"><button class="on" data-os="linux">Linux</button><button data-os="mac">macOS</button><button data-os="win">Windows</button></div>
+    <div class="code" id="inst"></div>
+
+    <h3>Command-line capture</h3>
+    <div class="code"><button class="btn btn-ghost btn-sm cp" data-cpc>Copy</button><span class="c"># capture HTTPS traffic on eth0 into a 100 MB ring buffer</span>
+<span class="k">netrova-cli</span> capture -i eth0 -f <span class="s">"tcp port 443"</span> --ring 10x10MB -w session.pcapng
+
+<span class="c"># read a capture and show only TLS Client Hello packets</span>
+<span class="k">netrova-cli</span> read session.pcapng -Y <span class="s">"tls.handshake.type == 1"</span>
+
+<span class="c"># top conversations by bytes</span>
+<span class="k">netrova-cli</span> stats conv session.pcapng --sort bytes --top 20</div>
+
+    <h3>Display filter reference</h3>
+    <div class="tbl-wrap"><table>
+      <tr><th>Filter</th><th>Shows</th></tr>
+      <tr><td><code>ip.addr == 10.0.1.24</code></td><td>All traffic to or from a host</td></tr>
+      <tr><td><code>tcp.port == 443</code></td><td>Traffic on a TCP port</td></tr>
+      <tr><td><code>dns.flags.rcode != 0</code></td><td>Failed DNS lookups</td></tr>
+      <tr><td><code>tcp.analysis.retransmission</code></td><td>Retransmitted segments</td></tr>
+      <tr><td><code>tls.handshake.type == 1</code></td><td>TLS Client Hello messages</td></tr>
+      <tr><td><code>http.response.code &gt;= 500</code></td><td>HTTP server errors</td></tr>
+      <tr><td><code>frame.time_delta &gt; 0.5</code></td><td>Gaps longer than 500 ms</td></tr>
+    </table></div>
   </div>
 </section>
 
-<section style="padding-top:20px">
-  <div class="wrap">
-    <div class="cta rv">
-      <h2>Ready to see your network clearly?</h2>
-      <p>Join network professionals who troubleshoot faster with Netrova Analyzer Pro.</p>
-      <button class="btn btn-pri" data-buy>Get Lifetime License — $1,270</button>
-    </div>
+<section class="panel" id="requirements">
+  <div class="panel-h"><h2><svg><use href="#i-cpu"/></svg>System requirements</h2></div>
+  <div class="panel-b">
+    <div class="tbl-wrap"><table>
+      <tr><th>Platform</th><th>Version</th><th>Package</th></tr>
+      <tr><td>Windows</td><td>Windows 10 (22H2) or later, x64 / ARM64</td><td>.msi installer</td></tr>
+      <tr><td>macOS</td><td>macOS 12 Monterey or later, Apple silicon &amp; Intel</td><td>Universal .dmg</td></tr>
+      <tr><td>Linux</td><td>Ubuntu 20.04+, Debian 11+, RHEL / Fedora 8+, x86_64 / aarch64</td><td>.deb, .rpm, AppImage</td></tr>
+    </table></div>
+    <p style="margin-top:14px;font-size:14px">Recommended: 8 GB RAM, 4 CPU cores and SSD storage for sustained high-rate captures. Packet capture requires administrator rights or the capture permission granted by the installer.</p>
   </div>
 </section>
+
+<section class="panel" id="license">
+  <div class="panel-h"><h2><svg><use href="#i-key"/></svg>License</h2><span class="tag vio">Lifetime · $1,270</span></div>
+  <div class="panel-b">
+    <p class="lead">One payment, yours for life. Every license includes all future updates of the 4.x and later releases.</p>
+    <div class="feat">
+      <div><b>3 device activations</b><span>Install on your workstation, laptop and lab machine. Move activations at any time.</span></div>
+      <div><b>All future updates</b><span>New protocol dissectors, features and security fixes at no extra cost.</span></div>
+      <div><b>Priority email support</b><span>Direct access to the engineering team for installation and usage questions.</span></div>
+      <div><b>Commercial use</b><span>Use for client work, internal operations and incident response.</span></div>
+    </div>
+    <h3>How payment works</h3>
+    <ol class="steps">
+      <li><b>Enter your name and email</b> — your license key is delivered there.</li>
+      <li><b>Choose USDT (TRC20 / ERC20), Bitcoin or Ethereum.</b> The amount is calculated at the live rate and locked for 30 minutes.</li>
+      <li><b>Send the exact amount</b> to the address shown and paste your transaction hash.</li>
+      <li><b>On-chain confirmation</b> — the payment is verified directly on the blockchain and your license is issued.</li>
+    </ol>
+    <button class="btn btn-pri" data-buy style="margin-top:4px">Buy Lifetime License — $1,270</button>
+  </div>
+</section>
+
+<section class="panel faq" id="faq">
+  <div class="panel-h"><h2><svg><use href="#i-help"/></svg>Frequently asked questions</h2></div>
+  <details><summary>Is this a subscription?</summary><p>No. The license is a one-time payment of $1,270 and never expires.</p></details>
+  <details><summary>Which cryptocurrencies are accepted?</summary><p>USDT on TRON (TRC20), USDT on Ethereum (ERC20), Bitcoin and Ethereum. Send only the selected asset on the selected network.</p></details>
+  <details><summary>How long does confirmation take?</summary><p>Usually a few minutes. TRON and Ethereum confirm fastest; Bitcoin needs one block confirmation, typically around 10 minutes.</p></details>
+  <details><summary>I sent less than the required amount.</summary><p>Exchanges often deduct withdrawal fees. Contact support with your order ID and send the remaining balance to complete the order.</p></details>
+  <details><summary>Can I move my license to a new computer?</summary><p>Yes. Deactivate the old device from the app or contact support and the activation is released immediately.</p></details>
+  <details><summary>Do you issue invoices?</summary><p>Yes. Reply to your license email with your company details and an invoice is issued for your order.</p></details>
+</section>
+
+</main>
+
+<aside class="side"><div class="stick">
+  <div class="lic">
+    <small>Lifetime license</small>
+    <div class="price"><b>$1,270</b><span>USD</span></div>
+    <div class="once">One-time payment · no subscription</div>
+    <button class="btn btn-pri" data-buy style="width:100%">Buy License</button>
+    <ul>
+      <li><svg><use href="#i-check"/></svg>All platforms, 3 activations</li>
+      <li><svg><use href="#i-check"/></svg>Lifetime updates</li>
+      <li><svg><use href="#i-check"/></svg>Priority email support</li>
+      <li><svg><use href="#i-check"/></svg>Commercial use included</li>
+    </ul>
+    <div class="coins"><i style="background:#26a17b">₮</i><i style="background:#f7931a">₿</i><i style="background:#627eea">Ξ</i><span>USDT · BTC · ETH</span></div>
+  </div>
+  <div class="box">
+    <h4>About</h4>
+    <div class="kvl"><span>Version</span><b class="mono">4.2.0</b></div>
+    <div class="kvl"><span>Released</span><b>Oct 28, 2026</b></div>
+    <div class="kvl"><span>Platforms</span><b>Win · macOS · Linux</b></div>
+    <div class="kvl"><span>Formats</span><b>pcap · pcapng</b></div>
+    <div class="kvl"><span>Support</span><b><a data-mail id="sm"></a></b></div>
+  </div>
+  <div class="box">
+    <h4>Protocols</h4>
+    <div class="chips"><span>TCP</span><span>UDP</span><span>IPv6</span><span>TLS 1.3</span><span>QUIC</span><span>HTTP/2</span><span>HTTP/3</span><span>DNS</span><span>DHCP</span><span>SMB3</span><span>Kerberos</span><span>LDAP</span><span>SIP</span><span>RTP</span><span>MQTT</span><span>Modbus</span></div>
+  </div>
+</div></aside>
+</div>
 
 <footer>
   <div class="wrap">
-    <div class="foot">
-      <div>
-        <a href="#" class="logo" style="margin-bottom:14px;color:var(--txt)"><svg viewBox="0 0 32 32" fill="none"><rect width="32" height="32" rx="9" fill="url(#lg)"/><path d="M6 17h4l3-7 4 13 3-8 2 2h4" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>Netrova</a>
-        <p style="max-width:320px">Professional network protocol analysis for engineers, security teams and developers.</p>
-      </div>
-      <div><h5>Product</h5><a href="#features">Features</a><a href="#capabilities">Capabilities</a><a href="#protocols">Protocols</a><a href="#pricing">Pricing</a></div>
-      <div><h5>Support</h5><a href="#faq">FAQ</a><a href="#" data-mail>Contact sales</a><a href="#" data-mail>License support</a></div>
-      <div><h5>Legal</h5><a href="#faq">Refund policy</a><a href="#faq">Acceptable use</a></div>
-    </div>
-    <div class="legal">
-      <span>© <span id="yr"></span> Netrova. All rights reserved.</span>
-      <span>Netrova Analyzer Pro is an independent product and is not affiliated with or endorsed by the Wireshark Foundation.</span>
-    </div>
+    <span>© <span id="yr"></span> Netrova. All rights reserved. Netrova Analyzer Pro is an independent product and is not affiliated with or endorsed by the Wireshark Foundation or GitHub.</span>
+    <nav><a href="#releases">Releases</a><a href="#docs">Docs</a><a href="#license">Licensing</a><a data-mail>Contact</a></nav>
   </div>
 </footer>
 
@@ -532,34 +503,62 @@ const ETH_RPC = 'https://ethereum-rpc.publicnode.com';
 const QUOTE_TTL = 30 * 60;
 
 $('#yr').textContent = new Date().getFullYear();
-addEventListener('scroll', () => $('#nav').classList.toggle('scrolled', scrollY > 20), {passive:true});
-const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), {threshold:.12});
-document.querySelectorAll('.rv').forEach(el => io.observe(el));
+$('#sm').textContent = window.NETROVA_CONFIG.sales_email;
 
-/* live capture table */
+/* tabs: sticky copy + scroll spy */
+const tabs = $('#tabs'), bar = $('#tabs-bar');
+bar.querySelector('.tabs').innerHTML = tabs.innerHTML;
+const allTabs = document.querySelectorAll('.tabs a');
+const secs = [...tabs.querySelectorAll('a')].map(a => $(a.getAttribute('href')));
+const spy = () => {
+  bar.classList.toggle('show', tabs.getBoundingClientRect().bottom < 64);
+  let cur = secs[0].id;
+  for (const s of secs) if (s.getBoundingClientRect().top < 160) cur = s.id;
+  allTabs.forEach(a => a.classList.toggle('on', a.getAttribute('href') === '#' + cur));
+};
+addEventListener('scroll', spy, {passive:true}); spy();
+
+/* app shot */
 const SRC = [['10.0.1.24','104.18.32.7','TLSv1.3','p-tls',['Client Hello (SNI=api.example.com)','Application Data','Server Hello, Change Cipher Spec']],
   ['10.0.1.24','1.1.1.1','DNS','p-dns',['Standard query 0x4f21 A cdn.example.net','Standard query response 0x4f21 A 151.101.1.69']],
   ['10.0.1.24','172.217.18.4','QUIC','p-quic',['Initial, DCID=8f1c2e…, PKN: 0','Protected Payload (KP0)']],
   ['10.0.1.31','10.0.1.1','TCP','p-tcp',['53122 → 443 [SYN] Seq=0 Win=64240 MSS=1460','443 → 53122 [SYN, ACK] Seq=0 Ack=1','53122 → 443 [ACK] Seq=1 Ack=1 Win=502']],
-  ['10.0.1.40','93.184.216.34','HTTP','p-http',['GET /status HTTP/1.1','HTTP/1.1 200 OK (application/json)']],
   ['10.0.1.24','104.18.32.7','TCP','p-err',['[TCP Retransmission] 53122 → 443 [PSH, ACK] Len=517']]];
-let n = 1838, t0 = performance.now();
+let n = 2741, t0 = performance.now();
 const tbl = $('#tbl');
 function addRow() {
-  const s = SRC[Math.random() < .08 ? 5 : Math.floor(Math.random() * 5)];
+  const s = SRC[Math.random() < .08 ? 4 : Math.floor(Math.random() * 4)];
   const rev = Math.random() < .45, info = s[4][Math.floor(Math.random() * s[4].length)];
   const r = document.createElement('div');
-  r.className = 'row ' + s[3];
-  r.innerHTML = `<span>${++n}</span><span>${((performance.now() - t0) / 1000 + 12.4).toFixed(6)}</span><span>${rev ? s[1] : s[0]}</span><span>${rev ? s[0] : s[1]}</span><span class="proto">${s[2]}</span><span>${60 + Math.floor(Math.random() * 1400)}</span><span>${info}</span>`;
+  r.className = 'pk ' + s[3];
+  r.innerHTML = `<span>${++n}</span><span>${((performance.now() - t0) / 1000 + 8.2).toFixed(6)}</span><span>${rev ? s[1] : s[0]}</span><span>${rev ? s[0] : s[1]}</span><span>${s[2]}</span><span>${info}</span>`;
   tbl.children[0].after(r);
-  if (tbl.children.length > 12) tbl.lastElementChild.remove();
+  if (tbl.children.length > 9) tbl.lastElementChild.remove();
   $('#pc').textContent = `REC · ${n.toLocaleString('en-US')} packets`;
 }
-for (let i = 0; i < 9; i++) addRow();
-setInterval(addRow, 900);
+for (let i = 0; i < 8; i++) addRow();
+setInterval(addRow, 1100);
 
-const bars = $('#bars');
-for (let i = 0; i < 36; i++) { const b = document.createElement('i'); b.style.height = (20 + Math.abs(Math.sin(i / 3)) * 60 + Math.random() * 20) + '%'; bars.appendChild(b); }
+/* release assets */
+const ASSETS = [['NetrovaAnalyzerPro-4.2.0-x64.msi','Windows x64','118 MB'],['NetrovaAnalyzerPro-4.2.0-arm64.msi','Windows ARM64','112 MB'],
+  ['NetrovaAnalyzerPro-4.2.0-universal.dmg','macOS Universal','164 MB'],['netrova-analyzer-pro_4.2.0_amd64.deb','Debian / Ubuntu','96 MB'],
+  ['netrova-analyzer-pro-4.2.0.x86_64.rpm','RHEL / Fedora','97 MB'],['NetrovaAnalyzerPro-4.2.0-x86_64.AppImage','Linux AppImage','121 MB']];
+$('#assets').innerHTML = ASSETS.map(a => `<button class="asset" data-buy title="${a[1]}"><svg><use href="#i-pkg"/></svg><span class="n">${a[0]}</span><span class="sz">${a[2]}</span><span class="lk"><svg><use href="#i-lock"/></svg>License</span></button>`).join('');
+
+/* install snippets */
+const INST = {
+  linux: `<span class="c"># Debian / Ubuntu</span>\n<span class="k">sudo</span> apt install ./netrova-analyzer-pro_4.2.0_amd64.deb\n\n<span class="c"># RHEL / Fedora</span>\n<span class="k">sudo</span> dnf install ./netrova-analyzer-pro-4.2.0.x86_64.rpm\n\n<span class="c"># activate</span>\n<span class="k">netrova-cli</span> activate --key <span class="s">NTRV-XXXXX-XXXXX-XXXXX-XXXXX</span>`,
+  mac: `<span class="c"># open the disk image and drag the app to Applications, then:</span>\n<span class="k">/Applications/Netrova\\ Analyzer\\ Pro.app/Contents/MacOS/netrova-cli</span> activate \\\n  --key <span class="s">NTRV-XXXXX-XXXXX-XXXXX-XXXXX</span>`,
+  win: `<span class="c"># PowerShell (Administrator)</span>\n<span class="k">msiexec</span> /i NetrovaAnalyzerPro-4.2.0-x64.msi /qn\n\n<span class="k">& "C:\\Program Files\\Netrova\\netrova-cli.exe"</span> activate --key <span class="s">NTRV-XXXXX-XXXXX-XXXXX-XXXXX</span>`
+};
+const showOs = k => { $('#inst').innerHTML = `<button class="btn btn-ghost btn-sm cp" data-cpc>Copy</button>` + INST[k]; document.querySelectorAll('#os button').forEach(b => b.classList.toggle('on', b.dataset.os === k)); };
+document.querySelectorAll('#os button').forEach(b => b.onclick = () => showOs(b.dataset.os));
+showOs(/Win/.test(navigator.platform) ? 'win' : /Mac/.test(navigator.platform) ? 'mac' : 'linux');
+document.addEventListener('click', e => {
+  const b = e.target.closest('[data-cpc]'); if (!b) return;
+  const t = b.parentElement.cloneNode(true); t.querySelector('[data-cpc]').remove();
+  navigator.clipboard.writeText(t.textContent.trim()).then(() => toast('Copied to clipboard'));
+});
 
 /* config + helpers */
 let CFG = null, BACKEND = null;
