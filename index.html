@@ -1,0 +1,785 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Netrova Analyzer Pro — Deep Packet Inspection for Network Professionals</title>
+<meta name="description" content="Netrova Analyzer Pro is a professional network protocol analyzer: live packet capture, deep protocol dissection, TLS decryption, stream reassembly and expert diagnostics.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js" defer></script>
+<style>
+:root{
+  --bg:#070b14;--bg2:#0b1120;--card:#0f172a;--card2:#111b31;--line:#1e2a44;--line2:#273556;
+  --txt:#e6ecf7;--mut:#93a1bd;--dim:#64748b;--acc:#22d3ee;--acc2:#8b5cf6;--ok:#22c55e;--warn:#f59e0b;--err:#ef4444;
+  --grad:linear-gradient(135deg,#22d3ee 0%,#6366f1 55%,#a855f7 100%);
+  --r:16px;--mono:'JetBrains Mono',ui-monospace,monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,sans-serif;background:var(--bg);color:var(--txt);line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+.wrap{max-width:1200px;margin:0 auto;padding:0 24px}
+.grad-txt{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;padding:14px 26px;border-radius:12px;font-weight:600;font-size:15px;cursor:pointer;border:0;transition:.2s;font-family:inherit}
+.btn-pri{background:var(--grad);color:#fff;box-shadow:0 10px 30px -10px rgba(99,102,241,.7)}
+.btn-pri:hover{transform:translateY(-2px);box-shadow:0 16px 40px -12px rgba(99,102,241,.9)}
+.btn-ghost{background:rgba(255,255,255,.04);color:var(--txt);border:1px solid var(--line2)}
+.btn-ghost:hover{background:rgba(255,255,255,.08)}
+.btn:disabled{opacity:.5;cursor:not-allowed;transform:none}
+.pill{display:inline-flex;align-items:center;gap:8px;padding:6px 14px;border-radius:999px;border:1px solid var(--line2);background:rgba(34,211,238,.06);color:#a5f3fc;font-size:13px;font-weight:500}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--ok);box-shadow:0 0 12px var(--ok)}
+section{padding:110px 0;position:relative}
+.sec-head{text-align:center;max-width:720px;margin:0 auto 64px}
+.sec-head .eyebrow{color:var(--acc);font-weight:600;font-size:13px;letter-spacing:.16em;text-transform:uppercase}
+.sec-head h2{font-size:clamp(30px,4vw,44px);line-height:1.15;margin:14px 0 16px;font-weight:800;letter-spacing:-.02em}
+.sec-head p{color:var(--mut);font-size:18px}
+
+/* nav */
+nav{position:fixed;inset:0 0 auto 0;z-index:50;transition:.3s;border-bottom:1px solid transparent}
+nav.scrolled{background:rgba(7,11,20,.82);backdrop-filter:blur(14px);border-color:var(--line)}
+nav .wrap{display:flex;align-items:center;justify-content:space-between;height:72px}
+.logo{display:flex;align-items:center;gap:10px;font-weight:800;font-size:19px;letter-spacing:-.01em}
+.logo svg{width:32px;height:32px}
+.nav-links{display:flex;gap:34px;color:var(--mut);font-size:15px;font-weight:500}
+.nav-links a:hover{color:var(--txt)}
+.nav-cta{padding:10px 20px;font-size:14px}
+@media(max-width:860px){.nav-links{display:none}}
+
+/* hero */
+.hero{padding:160px 0 90px;overflow:hidden}
+.hero::before{content:"";position:absolute;inset:-20% -10% auto;height:900px;background:radial-gradient(600px 400px at 20% 20%,rgba(34,211,238,.16),transparent 70%),radial-gradient(700px 500px at 80% 10%,rgba(139,92,246,.18),transparent 70%);pointer-events:none}
+.hero::after{content:"";position:absolute;inset:0;background-image:linear-gradient(rgba(148,163,184,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(148,163,184,.05) 1px,transparent 1px);background-size:56px 56px;mask-image:radial-gradient(ellipse at 50% 0%,#000 30%,transparent 75%);pointer-events:none}
+.hero .wrap{position:relative;z-index:1;text-align:center}
+.hero h1{font-size:clamp(40px,6.2vw,74px);line-height:1.04;font-weight:800;letter-spacing:-.035em;margin:26px auto 22px;max-width:980px}
+.hero p.lead{font-size:clamp(17px,2vw,20px);color:var(--mut);max-width:720px;margin:0 auto 38px}
+.hero-ctas{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+.hero-meta{display:flex;gap:28px;justify-content:center;flex-wrap:wrap;margin-top:28px;color:var(--dim);font-size:14px}
+.hero-meta span{display:flex;align-items:center;gap:8px}
+.hero-meta svg{width:16px;height:16px;color:var(--ok)}
+
+/* app mockup */
+.app{margin:72px auto 0;max-width:1100px;border-radius:18px;border:1px solid var(--line2);background:#0a1222;box-shadow:0 40px 120px -30px rgba(99,102,241,.45),0 0 0 1px rgba(255,255,255,.02) inset;overflow:hidden;text-align:left}
+.app-bar{display:flex;align-items:center;gap:8px;padding:12px 16px;background:#0d1628;border-bottom:1px solid var(--line)}
+.app-bar i{width:12px;height:12px;border-radius:50%;display:block}
+.app-bar .t{margin-left:14px;font-size:13px;color:var(--dim);font-family:var(--mono)}
+.app-tool{display:flex;align-items:center;gap:10px;padding:10px 16px;border-bottom:1px solid var(--line);background:#0b1425}
+.filter{flex:1;display:flex;align-items:center;gap:10px;background:#07101f;border:1px solid #1f4d3a;border-radius:8px;padding:8px 12px;font-family:var(--mono);font-size:13px;color:#86efac}
+.filter b{color:var(--dim);font-weight:400}
+.rec{display:flex;align-items:center;gap:8px;font-size:12px;color:#fca5a5;font-family:var(--mono)}
+.rec::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--err);animation:blink 1.2s infinite}
+@keyframes blink{50%{opacity:.2}}
+.tbl{font-family:var(--mono);font-size:12.5px;max-height:262px;overflow:hidden;position:relative}
+.tbl .row{display:grid;grid-template-columns:60px 110px 150px 150px 80px 64px 1fr;gap:10px;padding:6px 16px;border-bottom:1px solid rgba(30,42,68,.6);white-space:nowrap;animation:fadein .5s both}
+.tbl .row.h{color:var(--dim);background:#0d1628;font-weight:500;position:sticky;top:0;z-index:1}
+.tbl .row span{overflow:hidden;text-overflow:ellipsis}
+.p-tcp{background:rgba(99,102,241,.07)} .p-tls{background:rgba(34,211,238,.07)} .p-dns{background:rgba(168,85,247,.08)} .p-http{background:rgba(34,197,94,.07)} .p-quic{background:rgba(245,158,11,.06)} .p-err{background:rgba(239,68,68,.12);color:#fecaca}
+.row .proto{font-weight:600}
+@keyframes fadein{from{opacity:0;transform:translateY(-6px)}}
+.panes{display:grid;grid-template-columns:1.1fr 1fr;border-top:1px solid var(--line)}
+.pane{padding:14px 16px;font-family:var(--mono);font-size:12px;color:var(--mut);min-height:150px}
+.pane+.pane{border-left:1px solid var(--line)}
+.tree div{padding:2px 0} .tree .k{color:#93c5fd} .tree .v{color:#e2e8f0}
+.hex{color:#7dd3fc;line-height:1.75} .hex em{color:var(--dim);font-style:normal} .hex u{text-decoration:none;color:#f0abfc}
+@media(max-width:860px){.panes{grid-template-columns:1fr}.pane+.pane{border-left:0;border-top:1px solid var(--line)}.tbl .row{grid-template-columns:44px 90px 120px 120px 64px 50px 260px}}
+
+/* logos/stats */
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:var(--r);overflow:hidden;margin-top:80px}
+.stat{background:var(--bg2);padding:30px 24px;text-align:center}
+.stat b{display:block;font-size:34px;font-weight:800;letter-spacing:-.02em}
+.stat span{color:var(--mut);font-size:14px}
+@media(max-width:760px){.stats{grid-template-columns:repeat(2,1fr)}}
+
+/* features */
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+@media(max-width:960px){.grid3{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:640px){.grid3{grid-template-columns:1fr}}
+.card{background:linear-gradient(180deg,var(--card),var(--bg2));border:1px solid var(--line);border-radius:var(--r);padding:30px;transition:.25s;position:relative;overflow:hidden}
+.card:hover{border-color:var(--line2);transform:translateY(-4px)}
+.card::after{content:"";position:absolute;inset:0 0 auto;height:1px;background:linear-gradient(90deg,transparent,rgba(34,211,238,.5),transparent);opacity:0;transition:.3s}
+.card:hover::after{opacity:1}
+.ico{width:48px;height:48px;border-radius:12px;display:grid;place-items:center;background:rgba(99,102,241,.12);border:1px solid rgba(99,102,241,.3);margin-bottom:20px;color:#a5b4fc}
+.ico svg{width:24px;height:24px}
+.card h3{font-size:19px;margin-bottom:10px;font-weight:700}
+.card p{color:var(--mut);font-size:15px}
+
+/* split */
+.split{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center}
+.split+.split{margin-top:110px}
+.split.rev .split-txt{order:2}
+@media(max-width:900px){.split{grid-template-columns:1fr;gap:36px}.split.rev .split-txt{order:0}}
+.split h3{font-size:clamp(26px,3vw,36px);line-height:1.2;font-weight:800;letter-spacing:-.02em;margin:12px 0 16px}
+.split p{color:var(--mut);font-size:17px;margin-bottom:22px}
+.checks{list-style:none;display:grid;gap:12px}
+.checks li{display:flex;gap:12px;align-items:flex-start;color:#cbd5e1}
+.checks svg{flex:none;width:20px;height:20px;color:var(--acc);margin-top:2px}
+.panel{background:#0a1222;border:1px solid var(--line2);border-radius:var(--r);padding:22px;font-family:var(--mono);font-size:13px;box-shadow:0 30px 80px -40px rgba(34,211,238,.35)}
+.panel .ttl{display:flex;justify-content:space-between;color:var(--dim);font-size:12px;margin-bottom:14px;font-family:Inter,sans-serif;font-weight:500}
+.chat .c{padding:7px 10px;border-radius:8px;margin:6px 0;white-space:pre-wrap;word-break:break-all}
+.chat .cli{background:rgba(239,68,68,.08);color:#fca5a5;border-left:2px solid #ef4444}
+.chat .srv{background:rgba(59,130,246,.08);color:#93c5fd;border-left:2px solid #3b82f6}
+.exp div{display:grid;grid-template-columns:86px 1fr 54px;gap:10px;padding:9px 0;border-bottom:1px solid var(--line);align-items:center}
+.sev{font-size:11px;padding:2px 8px;border-radius:6px;text-align:center;font-weight:600}
+.s-e{background:rgba(239,68,68,.15);color:#fca5a5}.s-w{background:rgba(245,158,11,.15);color:#fcd34d}.s-n{background:rgba(34,211,238,.12);color:#67e8f9}.s-c{background:rgba(148,163,184,.12);color:#cbd5e1}
+.exp b{color:var(--txt);font-weight:500;text-align:right}
+.bars{display:flex;align-items:flex-end;gap:5px;height:140px;margin-top:8px}
+.bars i{flex:1;border-radius:4px 4px 0 0;background:var(--grad);opacity:.85}
+
+/* protocols */
+.protos{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;max-width:960px;margin:0 auto}
+.protos span{padding:9px 16px;border-radius:10px;border:1px solid var(--line);background:var(--card);font-family:var(--mono);font-size:13px;color:#cbd5e1;transition:.2s}
+.protos span:hover{border-color:var(--acc);color:#fff}
+.platforms{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;margin-top:48px}
+.plat{display:flex;align-items:center;gap:12px;padding:16px 24px;border-radius:14px;border:1px solid var(--line);background:var(--bg2);font-weight:600}
+.plat svg{width:26px;height:26px}
+.plat small{display:block;color:var(--dim);font-weight:400;font-size:12px}
+
+/* pricing */
+.price-wrap{display:grid;grid-template-columns:1.15fr 1fr;gap:0;max-width:1000px;margin:0 auto;border-radius:22px;overflow:hidden;border:1px solid var(--line2);background:var(--card);box-shadow:0 40px 120px -40px rgba(139,92,246,.5)}
+@media(max-width:860px){.price-wrap{grid-template-columns:1fr}}
+.price-l{padding:44px}
+.price-r{padding:44px;background:linear-gradient(160deg,rgba(34,211,238,.1),rgba(139,92,246,.14));border-left:1px solid var(--line2);display:flex;flex-direction:column;justify-content:center}
+@media(max-width:860px){.price-r{border-left:0;border-top:1px solid var(--line2)}}
+.tag{display:inline-block;font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#c4b5fd;background:rgba(139,92,246,.15);border:1px solid rgba(139,92,246,.35);padding:5px 12px;border-radius:999px}
+.price-l h3{font-size:28px;margin:16px 0 8px;font-weight:800}
+.price-l p{color:var(--mut);margin-bottom:26px}
+.inc{display:grid;grid-template-columns:1fr 1fr;gap:12px 18px;list-style:none}
+@media(max-width:560px){.inc{grid-template-columns:1fr}}
+.inc li{display:flex;gap:10px;font-size:15px;color:#cbd5e1}
+.inc svg{flex:none;width:18px;height:18px;color:var(--ok);margin-top:3px}
+.amount{font-size:68px;font-weight:800;letter-spacing:-.04em;line-height:1}
+.amount sup{font-size:28px;vertical-align:top;margin-right:4px;position:relative;top:10px}
+.amount small{font-size:16px;color:var(--mut);font-weight:500;letter-spacing:0}
+.once{color:var(--mut);margin:10px 0 26px}
+.coins{display:flex;gap:10px;margin-top:22px;justify-content:center;flex-wrap:wrap}
+.coin{display:flex;align-items:center;gap:7px;font-size:13px;color:var(--mut);padding:6px 11px;border:1px solid var(--line2);border-radius:999px;background:rgba(0,0,0,.2)}
+.coin i{width:18px;height:18px;border-radius:50%;display:grid;place-items:center;font-style:normal;font-weight:700;font-size:10px;color:#fff}
+.secure{display:flex;align-items:center;justify-content:center;gap:8px;color:var(--dim);font-size:13px;margin-top:18px}
+.secure svg{width:15px;height:15px}
+
+/* steps */
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-top:56px}
+@media(max-width:860px){.steps{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:520px){.steps{grid-template-columns:1fr}}
+.step{padding:24px;border-radius:14px;border:1px solid var(--line);background:var(--bg2)}
+.step b{display:inline-grid;place-items:center;width:32px;height:32px;border-radius:9px;background:var(--grad);font-size:14px;margin-bottom:14px}
+.step h4{font-size:16px;margin-bottom:6px}
+.step p{color:var(--mut);font-size:14px}
+
+/* faq */
+.faq{max-width:820px;margin:0 auto}
+.faq details{border:1px solid var(--line);border-radius:14px;background:var(--bg2);margin-bottom:12px;transition:.2s}
+.faq details[open]{border-color:var(--line2);background:var(--card)}
+.faq summary{list-style:none;cursor:pointer;padding:20px 24px;font-weight:600;font-size:16px;display:flex;justify-content:space-between;align-items:center;gap:16px}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{content:"+";font-size:22px;color:var(--acc);transition:.2s;flex:none}
+.faq details[open] summary::after{transform:rotate(45deg)}
+.faq details p{padding:0 24px 22px;color:var(--mut)}
+
+/* cta + footer */
+.cta{text-align:center;border-radius:24px;padding:72px 32px;background:radial-gradient(600px 300px at 50% 0%,rgba(99,102,241,.35),transparent 70%),var(--card);border:1px solid var(--line2)}
+.cta h2{font-size:clamp(28px,4vw,42px);font-weight:800;letter-spacing:-.02em;margin-bottom:14px}
+.cta p{color:var(--mut);font-size:18px;margin-bottom:30px}
+footer{border-top:1px solid var(--line);padding:56px 0 40px;color:var(--dim);font-size:14px}
+.foot{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:32px}
+@media(max-width:760px){.foot{grid-template-columns:1fr 1fr}}
+.foot h5{color:var(--txt);font-size:14px;margin-bottom:14px}
+.foot a{display:block;margin-bottom:9px}.foot a:hover{color:var(--txt)}
+.legal{border-top:1px solid var(--line);margin-top:40px;padding-top:24px;display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;font-size:13px}
+
+/* reveal */
+.rv{opacity:0;transform:translateY(24px);transition:opacity .7s ease,transform .7s ease}
+.rv.in{opacity:1;transform:none}
+
+/* modal */
+.ov{position:fixed;inset:0;z-index:100;background:rgba(2,6,15,.78);backdrop-filter:blur(8px);display:none;align-items:center;justify-content:center;padding:20px}
+.ov.show{display:flex;animation:fadein .2s}
+.modal{width:100%;max-width:540px;max-height:calc(100vh - 40px);overflow:auto;background:var(--card);border:1px solid var(--line2);border-radius:20px;box-shadow:0 40px 120px rgba(0,0,0,.6)}
+.m-head{display:flex;justify-content:space-between;align-items:center;padding:22px 26px;border-bottom:1px solid var(--line)}
+.m-head h3{font-size:18px}
+.m-head small{color:var(--mut);display:block;font-size:13px;font-weight:400}
+.x{background:none;border:0;color:var(--mut);font-size:26px;cursor:pointer;line-height:1;padding:4px 8px;border-radius:8px}
+.x:hover{background:rgba(255,255,255,.06);color:#fff}
+.prog{display:flex;gap:6px;padding:16px 26px 0}
+.prog i{flex:1;height:4px;border-radius:4px;background:var(--line)}
+.prog i.on{background:var(--grad)}
+.m-body{padding:22px 26px 26px}
+.fld{margin-bottom:16px}
+.fld label{display:block;font-size:13px;font-weight:600;color:#cbd5e1;margin-bottom:7px}
+.fld input{width:100%;padding:13px 14px;border-radius:10px;border:1px solid var(--line2);background:#0a1222;color:var(--txt);font-size:15px;font-family:inherit;outline:none;transition:.2s}
+.fld input:focus{border-color:var(--acc);box-shadow:0 0 0 3px rgba(34,211,238,.15)}
+.fld input.mono{font-family:var(--mono);font-size:13px}
+.sum{display:flex;justify-content:space-between;align-items:center;padding:14px 16px;border-radius:12px;background:#0a1222;border:1px solid var(--line);margin-bottom:18px}
+.sum span{color:var(--mut);font-size:14px}.sum b{font-size:18px}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:18px}
+.opt{display:flex;align-items:center;gap:12px;padding:14px;border-radius:12px;border:1px solid var(--line2);background:#0a1222;cursor:pointer;transition:.2s;text-align:left;color:var(--txt);font-family:inherit}
+.opt:hover{border-color:#3b4d75}
+.opt.sel{border-color:var(--acc);background:rgba(34,211,238,.07);box-shadow:0 0 0 3px rgba(34,211,238,.12)}
+.opt i{flex:none;width:34px;height:34px;border-radius:50%;display:grid;place-items:center;font-style:normal;font-weight:800;font-size:13px;color:#fff}
+.opt b{display:block;font-size:14px}.opt small{color:var(--dim);font-size:12px}
+.pay{text-align:center}
+.qr{display:inline-block;padding:14px;background:#fff;border-radius:14px;margin:4px 0 18px}
+.qr img,.qr canvas{display:block;width:180px!important;height:180px!important}
+.kv{text-align:left;margin-bottom:12px}
+.kv label{display:block;font-size:12px;color:var(--dim);font-weight:600;text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px}
+.copy{display:flex;align-items:center;gap:8px;background:#0a1222;border:1px solid var(--line2);border-radius:10px;padding:10px 10px 10px 14px}
+.copy code{flex:1;font-family:var(--mono);font-size:13px;word-break:break-all;color:#e2e8f0}
+.copy button{flex:none;background:rgba(255,255,255,.06);border:1px solid var(--line2);color:var(--txt);border-radius:8px;padding:7px 12px;font-size:12px;font-weight:600;cursor:pointer;font-family:inherit}
+.copy button:hover{background:rgba(255,255,255,.12)}
+.warn{display:flex;gap:10px;text-align:left;font-size:13px;color:#fcd34d;background:rgba(245,158,11,.08);border:1px solid rgba(245,158,11,.25);border-radius:10px;padding:12px 14px;margin:14px 0 18px}
+.warn svg{flex:none;width:18px;height:18px;margin-top:1px}
+.timer{font-size:13px;color:var(--mut);margin-bottom:14px}.timer b{color:var(--txt);font-family:var(--mono)}
+.err{color:#fca5a5;font-size:14px;margin:-4px 0 14px;display:none}
+.row2{display:flex;gap:10px}.row2 .btn{flex:1}
+.res{text-align:center;padding:10px 0}
+.res .big{width:72px;height:72px;border-radius:50%;display:grid;place-items:center;margin:0 auto 18px}
+.res .big svg{width:36px;height:36px}
+.res h4{font-size:22px;margin-bottom:8px}
+.res p{color:var(--mut);margin-bottom:18px}
+.spin{width:18px;height:18px;border:2px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:sp .8s linear infinite}
+@keyframes sp{to{transform:rotate(360deg)}}
+.toast{position:fixed;left:50%;bottom:28px;transform:translate(-50%,20px);background:#111b31;border:1px solid var(--line2);padding:10px 18px;border-radius:10px;font-size:14px;opacity:0;transition:.25s;z-index:200;pointer-events:none}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+</style>
+</head>
+<body>
+
+<nav id="nav">
+  <div class="wrap">
+    <a href="#" class="logo">
+      <svg viewBox="0 0 32 32" fill="none"><defs><linearGradient id="lg" x1="0" y1="0" x2="32" y2="32"><stop stop-color="#22d3ee"/><stop offset=".55" stop-color="#6366f1"/><stop offset="1" stop-color="#a855f7"/></linearGradient></defs><rect width="32" height="32" rx="9" fill="url(#lg)"/><path d="M6 17h4l3-7 4 13 3-8 2 2h4" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Netrova
+    </a>
+    <div class="nav-links">
+      <a href="#features">Features</a><a href="#capabilities">Capabilities</a><a href="#protocols">Protocols</a><a href="#pricing">Pricing</a><a href="#faq">FAQ</a>
+    </div>
+    <button class="btn btn-pri nav-cta" data-buy>Buy License</button>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap">
+    <span class="pill"><span class="dot"></span> Netrova Analyzer Pro 4.2 is now available</span>
+    <h1>See every packet.<br><span class="grad-txt">Solve every network problem.</span></h1>
+    <p class="lead">A professional-grade protocol analyzer for network engineers, security teams and developers. Capture live traffic, dissect hundreds of protocols and pinpoint the root cause in minutes, not hours.</p>
+    <div class="hero-ctas">
+      <button class="btn btn-pri" data-buy>Get Lifetime License — $1,270
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M13 5l7 7-7 7"/></svg></button>
+      <a href="#features" class="btn btn-ghost">Explore features</a>
+    </div>
+    <div class="hero-meta">
+      <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg>One-time payment</span>
+      <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg>Windows, macOS &amp; Linux</span>
+      <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg>Free updates for life</span>
+    </div>
+
+    <div class="app rv">
+      <div class="app-bar"><i style="background:#ef4444"></i><i style="background:#f59e0b"></i><i style="background:#22c55e"></i><span class="t">Netrova Analyzer Pro — capture on en0 (Wi-Fi)</span></div>
+      <div class="app-tool">
+        <div class="filter"><b>Filter</b> tcp.port == 443 || dns || http</div>
+        <div class="rec" id="pc">REC · 0 packets</div>
+      </div>
+      <div class="tbl" id="tbl">
+        <div class="row h"><span>No.</span><span>Time</span><span>Source</span><span>Destination</span><span>Proto</span><span>Len</span><span>Info</span></div>
+      </div>
+      <div class="panes">
+        <div class="pane tree">
+          <div>▾ <span class="k">Frame 1842:</span> <span class="v">583 bytes on wire (4664 bits)</span></div>
+          <div>▾ <span class="k">Ethernet II,</span> <span class="v">Src: a4:83:e7:1c:02:9f, Dst: 3c:22:fb:41:aa:10</span></div>
+          <div>▾ <span class="k">Internet Protocol Version 4,</span> <span class="v">Src: 10.0.1.24, Dst: 104.18.32.7</span></div>
+          <div>▾ <span class="k">Transmission Control Protocol,</span> <span class="v">Src Port: 53122, Dst Port: 443, Seq: 1, Ack: 1, Len: 517</span></div>
+          <div>&nbsp;&nbsp;▾ <span class="k">Transport Layer Security</span></div>
+          <div>&nbsp;&nbsp;&nbsp;&nbsp;<span class="k">Handshake Type:</span> <span class="v">Client Hello (1)</span></div>
+          <div>&nbsp;&nbsp;&nbsp;&nbsp;<span class="k">Server Name:</span> <span class="v">api.example.com</span></div>
+        </div>
+        <div class="pane hex">
+          <div><em>0000</em>&nbsp; 3c 22 fb 41 aa 10 a4 83 &nbsp;e7 1c 02 9f 08 00 45 00</div>
+          <div><em>0010</em>&nbsp; 02 39 8a 4f 40 00 40 06 &nbsp;00 00 0a 00 01 18 68 12</div>
+          <div><em>0020</em>&nbsp; 20 07 cf 82 01 bb 6e 1a &nbsp;44 c2 9b 07 51 d3 80 18</div>
+          <div><em>0030</em>&nbsp; 08 0a <u>16 03 01 02 00 01</u> &nbsp;<u>00 01 fc 03 03 5f 9a 21</u></div>
+          <div><em>0040</em>&nbsp; c4 7e 33 0b a1 92 58 de &nbsp;11 6f 70 2c 8e e4 b3 0a</div>
+          <div><em>0050</em>&nbsp; 2d 61 70 69 2e 65 78 61 &nbsp;6d 70 6c 65 2e 63 6f 6d</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="stats rv">
+      <div class="stat"><b class="grad-txt">1,800+</b><span>Protocol dissectors</span></div>
+      <div class="stat"><b class="grad-txt">10 Gbps</b><span>Line-rate capture</span></div>
+      <div class="stat"><b class="grad-txt">&lt; 1 s</b><span>Filter on 1M packets</span></div>
+      <div class="stat"><b class="grad-txt">3</b><span>Desktop platforms</span></div>
+    </div>
+  </div>
+</header>
+
+<section id="features">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <div class="eyebrow">Features</div>
+      <h2>Everything you need to understand your network</h2>
+      <p>From a quick DNS check to a multi-gigabyte incident investigation, Netrova gives you complete visibility at every layer.</p>
+    </div>
+    <div class="grid3">
+      <div class="card rv"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M4.9 19.1 7 17M17 7l2.1-2.1"/></svg></div><h3>Live Packet Capture</h3><p>Capture from Ethernet, Wi-Fi, loopback, USB and VPN interfaces with ring buffers, auto-rotation and zero-drop buffering at line rate.</p></div>
+      <div class="card rv"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h12"/></svg></div><h3>Deep Protocol Dissection</h3><p>Over 1,800 dissectors decode every field of every layer — from Ethernet frames to application payloads — in a navigable tree.</p></div>
+      <div class="card rv"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 3H2l8 9.5V19l4 2v-8.5L22 3z"/></svg></div><h3>Powerful Display Filters</h3><p>An expressive filter language with autocomplete and syntax checking. Isolate exactly the traffic you care about in milliseconds.</p></div>
+      <div class="card rv"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div><h3>TLS &amp; QUIC Decryption</h3><p>Decrypt TLS 1.2/1.3 and QUIC sessions with key-log files or RSA keys to inspect HTTPS, HTTP/2 and HTTP/3 traffic in clear text.</p></div>
+      <div class="card rv"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"/><path d="m7 15 4-4 3 3 6-6"/></svg></div><h3>Statistics &amp; Graphs</h3><p>I/O graphs, conversation and endpoint tables, protocol hierarchy, flow diagrams and TCP stream graphs — all exportable.</p></div>
+      <div class="card rv"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 9v4M12 17h.01"/><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/></svg></div><h3>Expert Diagnostics</h3><p>Automatic detection of retransmissions, zero windows, out-of-order segments, malformed packets and latency spikes.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="capabilities" style="background:linear-gradient(180deg,transparent,var(--bg2) 20%,var(--bg2) 80%,transparent)">
+  <div class="wrap">
+    <div class="split">
+      <div class="split-txt rv">
+        <div class="sec-head" style="text-align:left;margin:0"><div class="eyebrow">Stream Reassembly</div></div>
+        <h3>Follow any conversation from first byte to last</h3>
+        <p>Reassemble TCP, UDP, TLS, HTTP/2 and QUIC streams into a readable, color-coded dialogue between client and server. Export payloads, extract transferred files and search inside streams.</p>
+        <ul class="checks">
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg>Follow TCP, UDP, TLS, HTTP and QUIC streams</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg>Export objects from HTTP, SMB, FTP and IMF</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg>ASCII, hex, C array, raw and YAML views</li>
+        </ul>
+      </div>
+      <div class="panel chat rv">
+        <div class="ttl"><span>Follow TLS Stream (tcp.stream eq 14)</span><span>2 client pkts · 3 server pkts</span></div>
+        <div class="c cli">GET /v2/orders?status=open HTTP/1.1
+Host: api.example.com
+Authorization: Bearer ••••••••
+Accept: application/json</div>
+        <div class="c srv">HTTP/1.1 200 OK
+Content-Type: application/json
+Content-Length: 1184
+X-Response-Time: 42ms</div>
+        <div class="c srv">{"orders":[{"id":"A-20931","status":"open","total":349.00}, …]}</div>
+      </div>
+    </div>
+
+    <div class="split rev">
+      <div class="split-txt rv">
+        <div class="sec-head" style="text-align:left;margin:0"><div class="eyebrow">Expert Information</div></div>
+        <h3>Find the root cause before your users notice</h3>
+        <p>Netrova's expert engine continuously analyzes every capture and surfaces problems by severity, so you can jump straight to the packets that matter.</p>
+        <ul class="checks">
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg>Retransmission, duplicate ACK and zero-window detection</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg>DNS failures, TLS alerts and HTTP error tracking</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg>Round-trip time and throughput analysis per stream</li>
+        </ul>
+      </div>
+      <div class="panel rv">
+        <div class="ttl"><span>Expert Information</span><span>capture-0417.pcapng</span></div>
+        <div class="exp">
+          <div><span class="sev s-e">Error</span><span>Malformed packet (DNS)</span><b>3</b></div>
+          <div><span class="sev s-w">Warning</span><span>TCP previous segment not captured</span><b>27</b></div>
+          <div><span class="sev s-w">Warning</span><span>TCP zero window</span><b>11</b></div>
+          <div><span class="sev s-n">Note</span><span>TCP retransmission</span><b>148</b></div>
+          <div><span class="sev s-n">Note</span><span>TCP duplicate ACK</span><b>96</b></div>
+          <div style="border:0"><span class="sev s-c">Chat</span><span>TLS Client Hello (SNI)</span><b>412</b></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="split">
+      <div class="split-txt rv">
+        <div class="sec-head" style="text-align:left;margin:0"><div class="eyebrow">Performance</div></div>
+        <h3>Built for captures measured in gigabytes</h3>
+        <p>A multi-threaded engine indexes packets as they arrive, so filtering, sorting and searching stay instant even on multi-million-packet captures.</p>
+        <ul class="checks">
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg>Open and merge pcap, pcapng and 30+ capture formats</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg>Command-line capture and batch export for automation</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg>Export to CSV, JSON, PDML, PSML and plain text</li>
+        </ul>
+      </div>
+      <div class="panel rv">
+        <div class="ttl"><span>I/O Graph · packets/s</span><span>interval 100 ms</span></div>
+        <div class="bars" id="bars"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="protocols">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <div class="eyebrow">Protocols &amp; Platforms</div>
+      <h2>Speaks every protocol on your network</h2>
+      <p>From core internet protocols to industrial, telecom and enterprise traffic.</p>
+    </div>
+    <div class="protos rv">
+      <span>Ethernet</span><span>802.11</span><span>VLAN</span><span>ARP</span><span>IPv4</span><span>IPv6</span><span>ICMP</span><span>TCP</span><span>UDP</span><span>SCTP</span><span>DNS</span><span>DHCP</span><span>HTTP/1.1</span><span>HTTP/2</span><span>HTTP/3</span><span>QUIC</span><span>TLS 1.3</span><span>SSH</span><span>SMB2/3</span><span>NFS</span><span>FTP</span><span>SMTP</span><span>IMAP</span><span>LDAP</span><span>Kerberos</span><span>RADIUS</span><span>BGP</span><span>OSPF</span><span>SNMP</span><span>SIP</span><span>RTP</span><span>MQTT</span><span>Modbus</span><span>gRPC</span><span>WebSocket</span><span>PostgreSQL</span><span>MySQL</span><span>Redis</span><span>+1,750 more</span>
+    </div>
+    <div class="platforms rv">
+      <div class="plat"><svg viewBox="0 0 24 24" fill="#60a5fa"><path d="M3 5.5 10.5 4.5v7H3zM11.5 4.4 21 3v8.5h-9.5zM3 12.5h7.5v7L3 18.5zM11.5 12.5H21V21l-9.5-1.4z"/></svg><div>Windows<small>10, 11, Server 2019+</small></div></div>
+      <div class="plat"><svg viewBox="0 0 24 24" fill="#e5e7eb"><path d="M16.4 12.6c0-2.4 2-3.6 2.1-3.6-1.1-1.7-2.9-1.9-3.5-1.9-1.5-.2-2.9.9-3.7.9s-1.9-.9-3.2-.8c-1.6 0-3.1 1-4 2.4-1.7 3-.4 7.4 1.2 9.8.8 1.2 1.8 2.5 3 2.4 1.2 0 1.7-.8 3.2-.8s1.9.8 3.2.8c1.3 0 2.2-1.2 3-2.4.9-1.4 1.3-2.7 1.3-2.8 0 0-2.6-1-2.6-4zM14 5.4c.7-.8 1.1-1.9 1-3-1 0-2.1.7-2.8 1.5-.6.7-1.2 1.8-1 2.9 1 .1 2.1-.6 2.8-1.4z"/></svg><div>macOS<small>12 Monterey+, Apple silicon</small></div></div>
+      <div class="plat"><svg viewBox="0 0 24 24" fill="#fbbf24"><path d="M12 2c-2 0-3.3 1.7-3.3 4.2 0 1.3.3 2.2-.4 3.4-.9 1.4-3 3.9-3 6.6 0 .8.2 1.5.5 2-.6.3-1.6.7-1.6 1.6 0 1.2 2.4 1.2 3.6 1.7 1 .4 1.6.5 2.2-.2.4-.4 1.2-.6 2-.6s1.6.2 2 .6c.6.7 1.2.6 2.2.2 1.2-.5 3.6-.5 3.6-1.7 0-.9-1-1.3-1.6-1.6.3-.5.5-1.2.5-2 0-2.7-2.1-5.2-3-6.6-.7-1.2-.4-2.1-.4-3.4C15.3 3.7 14 2 12 2z"/></svg><div>Linux<small>Ubuntu, Debian, RHEL, Fedora</small></div></div>
+    </div>
+  </div>
+</section>
+
+<section id="pricing">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <div class="eyebrow">Pricing</div>
+      <h2>One license. Lifetime access.</h2>
+      <p>No subscriptions, no renewals. Pay once and own Netrova Analyzer Pro forever.</p>
+    </div>
+    <div class="price-wrap rv">
+      <div class="price-l">
+        <span class="tag">Professional</span>
+        <h3>Netrova Analyzer Pro</h3>
+        <p>The complete toolkit for engineers who need answers from their network data.</p>
+        <ul class="inc">
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg>Lifetime license, 1 user</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg>Activate on up to 3 devices</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg>Windows, macOS &amp; Linux builds</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg>All 1,800+ protocol dissectors</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg>TLS &amp; QUIC decryption</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg>Expert diagnostics engine</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg>Command-line tools &amp; automation</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg>Free updates for life</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg>Priority email support</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg>Commercial use permitted</li>
+        </ul>
+      </div>
+      <div class="price-r" style="text-align:center">
+        <div class="amount"><sup>$</sup>1,270<small> USD</small></div>
+        <div class="once">One-time payment · Lifetime license</div>
+        <button class="btn btn-pri" data-buy style="width:100%;padding:17px">Buy with Crypto</button>
+        <div class="coins">
+          <span class="coin"><i style="background:#26a17b">₮</i>USDT</span>
+          <span class="coin"><i style="background:#f7931a">₿</i>BTC</span>
+          <span class="coin"><i style="background:#627eea">Ξ</i>ETH</span>
+        </div>
+        <div class="secure"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>Payments verified on-chain</div>
+      </div>
+    </div>
+
+    <div class="steps">
+      <div class="step rv"><b>1</b><h4>Enter your details</h4><p>Provide your name and the email address where your license will be delivered.</p></div>
+      <div class="step rv"><b>2</b><h4>Choose a cryptocurrency</h4><p>Pay with USDT (TRC20 or ERC20), Bitcoin or Ethereum at the live exchange rate.</p></div>
+      <div class="step rv"><b>3</b><h4>Send the payment</h4><p>Scan the QR code or copy the address and send the exact amount shown.</p></div>
+      <div class="step rv"><b>4</b><h4>Receive your license</h4><p>Submit your transaction hash. Once confirmed on-chain, your license key is issued.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="faq" style="padding-top:40px">
+  <div class="wrap">
+    <div class="sec-head rv"><div class="eyebrow">FAQ</div><h2>Frequently asked questions</h2></div>
+    <div class="faq rv">
+      <details open><summary>Is this a subscription?</summary><p>No. Netrova Analyzer Pro is sold as a one-time lifetime license. You pay $1,270 once and receive all future updates at no additional cost.</p></details>
+      <details><summary>Which cryptocurrencies do you accept?</summary><p>We accept USDT on TRON (TRC20) and Ethereum (ERC20), Bitcoin (BTC) and Ethereum (ETH). BTC and ETH amounts are calculated at the live USD exchange rate when you start checkout.</p></details>
+      <details><summary>How long does payment confirmation take?</summary><p>USDT on TRC20 typically confirms within a minute. Ethereum and ERC20 payments take a few minutes, and Bitcoin usually confirms within 10–30 minutes depending on network load. You can check your order status at any time from the checkout window.</p></details>
+      <details><summary>What happens if I send the wrong amount or network?</summary><p>Always send the exact amount on the network shown at checkout. Sending a different token or using another network may result in permanent loss of funds. If you underpay, contact our support team with your order ID.</p></details>
+      <details><summary>On how many devices can I use my license?</summary><p>Each license is for one user and can be activated on up to three devices. You can deactivate a device at any time to move the license to a new machine.</p></details>
+      <details><summary>Do you offer refunds?</summary><p>Because cryptocurrency transactions are irreversible, all refund requests are reviewed individually by our support team. Please contact us before purchasing if you have any questions about compatibility.</p></details>
+      <details><summary>Is it legal to capture network traffic?</summary><p>Netrova is a professional diagnostic tool. You are responsible for only capturing traffic on networks you own or are explicitly authorized to monitor, in accordance with applicable laws.</p></details>
+    </div>
+  </div>
+</section>
+
+<section style="padding-top:20px">
+  <div class="wrap">
+    <div class="cta rv">
+      <h2>Ready to see your network clearly?</h2>
+      <p>Join network professionals who troubleshoot faster with Netrova Analyzer Pro.</p>
+      <button class="btn btn-pri" data-buy>Get Lifetime License — $1,270</button>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="foot">
+      <div>
+        <a href="#" class="logo" style="margin-bottom:14px;color:var(--txt)"><svg viewBox="0 0 32 32" fill="none"><rect width="32" height="32" rx="9" fill="url(#lg)"/><path d="M6 17h4l3-7 4 13 3-8 2 2h4" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>Netrova</a>
+        <p style="max-width:320px">Professional network protocol analysis for engineers, security teams and developers.</p>
+      </div>
+      <div><h5>Product</h5><a href="#features">Features</a><a href="#capabilities">Capabilities</a><a href="#protocols">Protocols</a><a href="#pricing">Pricing</a></div>
+      <div><h5>Support</h5><a href="#faq">FAQ</a><a href="#" data-mail>Contact sales</a><a href="#" data-mail>License support</a></div>
+      <div><h5>Legal</h5><a href="#faq">Refund policy</a><a href="#faq">Acceptable use</a></div>
+    </div>
+    <div class="legal">
+      <span>© <span id="yr"></span> Netrova. All rights reserved.</span>
+      <span>Netrova Analyzer Pro is an independent product and is not affiliated with or endorsed by the Wireshark Foundation.</span>
+    </div>
+  </div>
+</footer>
+
+<!-- checkout -->
+<div class="ov" id="ov" role="dialog" aria-modal="true">
+  <div class="modal">
+    <div class="m-head"><h3 id="m-title">Checkout<small>Netrova Analyzer Pro · Lifetime License</small></h3><button class="x" id="x" aria-label="Close">×</button></div>
+    <div class="prog"><i class="on"></i><i></i><i></i><i></i></div>
+    <div class="m-body" id="mb"></div>
+  </div>
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+(() => {
+const $ = s => document.querySelector(s);
+const ICON = {usdt_trc20:['₮','#26a17b'],usdt_erc20:['₮','#26a17b'],btc:['₿','#f7931a'],eth:['Ξ','#627eea']};
+const UNIT = {usdt_trc20:'USDT',usdt_erc20:'USDT',btc:'BTC',eth:'ETH'};
+const USDT_TRC20 = 'TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t';
+const USDT_ERC20 = '0xdac17f958d2ee523a2206206994597c13d831ec7';
+const TRANSFER = '0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef';
+const ETH_RPC = 'https://ethereum-rpc.publicnode.com';
+const QUOTE_TTL = 30 * 60;
+
+$('#yr').textContent = new Date().getFullYear();
+addEventListener('scroll', () => $('#nav').classList.toggle('scrolled', scrollY > 20), {passive:true});
+const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), {threshold:.12});
+document.querySelectorAll('.rv').forEach(el => io.observe(el));
+
+/* live capture table */
+const SRC = [['10.0.1.24','104.18.32.7','TLSv1.3','p-tls',['Client Hello (SNI=api.example.com)','Application Data','Server Hello, Change Cipher Spec']],
+  ['10.0.1.24','1.1.1.1','DNS','p-dns',['Standard query 0x4f21 A cdn.example.net','Standard query response 0x4f21 A 151.101.1.69']],
+  ['10.0.1.24','172.217.18.4','QUIC','p-quic',['Initial, DCID=8f1c2e…, PKN: 0','Protected Payload (KP0)']],
+  ['10.0.1.31','10.0.1.1','TCP','p-tcp',['53122 → 443 [SYN] Seq=0 Win=64240 MSS=1460','443 → 53122 [SYN, ACK] Seq=0 Ack=1','53122 → 443 [ACK] Seq=1 Ack=1 Win=502']],
+  ['10.0.1.40','93.184.216.34','HTTP','p-http',['GET /status HTTP/1.1','HTTP/1.1 200 OK (application/json)']],
+  ['10.0.1.24','104.18.32.7','TCP','p-err',['[TCP Retransmission] 53122 → 443 [PSH, ACK] Len=517']]];
+let n = 1838, t0 = performance.now();
+const tbl = $('#tbl');
+function addRow() {
+  const s = SRC[Math.random() < .08 ? 5 : Math.floor(Math.random() * 5)];
+  const rev = Math.random() < .45, info = s[4][Math.floor(Math.random() * s[4].length)];
+  const r = document.createElement('div');
+  r.className = 'row ' + s[3];
+  r.innerHTML = `<span>${++n}</span><span>${((performance.now() - t0) / 1000 + 12.4).toFixed(6)}</span><span>${rev ? s[1] : s[0]}</span><span>${rev ? s[0] : s[1]}</span><span class="proto">${s[2]}</span><span>${60 + Math.floor(Math.random() * 1400)}</span><span>${info}</span>`;
+  tbl.children[0].after(r);
+  if (tbl.children.length > 12) tbl.lastElementChild.remove();
+  $('#pc').textContent = `REC · ${n.toLocaleString('en-US')} packets`;
+}
+for (let i = 0; i < 9; i++) addRow();
+setInterval(addRow, 900);
+
+const bars = $('#bars');
+for (let i = 0; i < 36; i++) { const b = document.createElement('i'); b.style.height = (20 + Math.abs(Math.sin(i / 3)) * 60 + Math.random() * 20) + '%'; bars.appendChild(b); }
+
+/* config + helpers */
+let CFG = null, BACKEND = null;
+const cfgReady = fetch('config.json', {cache:'no-store'}).then(r => r.json()).then(c => {
+  CFG = c;
+  document.querySelectorAll('[data-mail]').forEach(a => a.href = 'mailto:' + c.sales_email);
+});
+const toast = m => { const t = $('#toast'); t.textContent = m; t.classList.add('show'); clearTimeout(t._h); t._h = setTimeout(() => t.classList.remove('show'), 1800); };
+const esc = s => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const fmtUsd = v => '$' + Number(v).toLocaleString('en-US', {minimumFractionDigits:2});
+async function getJson(url, body) {
+  const r = await fetch(url, body ? {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(body)} : {cache:'no-store'});
+  const ct = r.headers.get('content-type') || '';
+  if (!ct.includes('json')) throw new Error('not-json');
+  const j = await r.json();
+  if (!r.ok) { const e = new Error(j.error || 'Request failed'); e.data = j; throw e; }
+  return j;
+}
+const rpc = (method, params) => getJson(ETH_RPC, {jsonrpc:'2.0', id:1, method, params}).then(j => j.result);
+
+async function quote() {
+  if (BACKEND !== false) {
+    try { const q = await getJson('order.php?action=quote'); BACKEND = true; return q; }
+    catch (e) { if (e.message !== 'not-json' && e.message !== 'Failed to fetch') throw e; BACKEND = false; }
+  }
+  await cfgReady;
+  const r = await getJson('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum&vs_currencies=usd');
+  const p = CFG.price_usd, w = {};
+  const amt = {usdt_trc20:p.toFixed(2), usdt_erc20:p.toFixed(2), btc:(p / r.bitcoin.usd).toFixed(8), eth:(p / r.ethereum.usd).toFixed(6)};
+  for (const k in CFG.wallets) w[k] = {...CFG.wallets[k], amount:amt[k]};
+  return {product:CFG.product, price_usd:p, wallets:w};
+}
+
+async function verifyOnChain(o) {
+  const addr = CFG.wallets[o.coin].address, tx = o.tx;
+  if (o.coin === 'usdt_trc20') {
+    const j = await getJson(`https://api.trongrid.io/v1/accounts/${addr}/transactions/trc20?only_to=true&limit=200&contract_address=${USDT_TRC20}`);
+    const t = (j.data || []).find(t => t.transaction_id.toLowerCase() === tx.toLowerCase() && t.to === addr);
+    return t ? Number(t.value) / 1e6 : null;
+  }
+  if (o.coin === 'btc') {
+    const j = await getJson(`https://mempool.space/api/tx/${tx}`).catch(() => null);
+    if (!j || !j.status || !j.status.confirmed) return null;
+    const s = j.vout.filter(v => v.scriptpubkey_address === addr).reduce((a, v) => a + v.value, 0);
+    return s ? s / 1e8 : null;
+  }
+  const rc = await rpc('eth_getTransactionReceipt', [tx]);
+  if (!rc || rc.status !== '0x1') return null;
+  if (o.coin === 'eth') {
+    const t = await rpc('eth_getTransactionByHash', [tx]);
+    return t && t.to && t.to.toLowerCase() === addr.toLowerCase() ? Number(BigInt(t.value)) / 1e18 : null;
+  }
+  const topic = '0x' + addr.toLowerCase().slice(2).padStart(64, '0');
+  const s = (rc.logs || []).filter(l => l.address.toLowerCase() === USDT_ERC20 && l.topics[0] === TRANSFER && (l.topics[2] || '').toLowerCase() === topic)
+    .reduce((a, l) => a + Number(BigInt(l.data)) / 1e6, 0);
+  return s || null;
+}
+
+function orderId() { const b = crypto.getRandomValues(new Uint8Array(4)); return 'NTR-' + [...b].map(x => x.toString(16).padStart(2, '0')).join('').toUpperCase(); }
+
+async function submitOrder(o) {
+  if (BACKEND) return (await getJson('order.php?action=submit', o)).order;
+  const got = await verifyOnChain(o);
+  const ord = {...o, id: o.id || orderId(), received: got};
+  ord.status = got === null ? 'pending' : got >= Number(o.amount) * (CFG.tolerance || .98) ? 'paid' : 'underpaid';
+  localStorage.setItem('ntr_order', JSON.stringify(ord));
+  return ord;
+}
+async function refreshOrder(o) {
+  if (BACKEND) return (await getJson('order.php?action=status&id=' + encodeURIComponent(o.id))).order;
+  return submitOrder(o);
+}
+
+/* checkout */
+const S = {step:0, name:'', email:'', coin:'usdt_trc20', q:null, qAt:0, order:null};
+const ov = $('#ov'), mb = $('#mb');
+const open = () => { ov.classList.add('show'); document.body.style.overflow = 'hidden'; render(); };
+const close = () => { ov.classList.remove('show'); document.body.style.overflow = ''; };
+document.querySelectorAll('[data-buy]').forEach(b => b.addEventListener('click', open));
+$('#x').onclick = close;
+ov.addEventListener('click', e => { if (e.target === ov) close(); });
+addEventListener('keydown', e => { if (e.key === 'Escape') close(); });
+const setProg = i => document.querySelectorAll('.prog i').forEach((el, k) => el.classList.toggle('on', k <= i));
+const go = s => { S.step = s; render(); };
+const errBox = () => `<div class="err" id="err"></div>`;
+const showErr = m => { const e = $('#err'); e.textContent = m; e.style.display = 'block'; };
+const loadingBtn = (b, on, label) => { b.disabled = on; b.innerHTML = on ? '<span class="spin"></span>' : label; };
+
+function render() {
+  setProg(S.step);
+  [stepDetails, stepCoin, stepPay, stepResult][S.step]();
+}
+
+function stepDetails() {
+  mb.innerHTML = `
+    <div class="sum"><span>Netrova Analyzer Pro · Lifetime</span><b>${fmtUsd(1270)}</b></div>
+    <div class="fld"><label for="nm">Full name</label><input id="nm" autocomplete="name" value="${esc(S.name)}" placeholder="Jane Smith"></div>
+    <div class="fld"><label for="em">Email address</label><input id="em" type="email" autocomplete="email" value="${esc(S.email)}" placeholder="you@company.com"></div>
+    <p style="color:var(--dim);font-size:13px;margin:-4px 0 18px">Your license key and receipt will be sent to this email.</p>
+    ${errBox()}
+    <button class="btn btn-pri" id="nx" style="width:100%">Continue to payment</button>`;
+  $('#nm').focus();
+  $('#nx').onclick = () => {
+    S.name = $('#nm').value.trim(); S.email = $('#em').value.trim();
+    if (!S.name) return showErr('Please enter your full name.');
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(S.email)) return showErr('Please enter a valid email address.');
+    go(1);
+  };
+  mb.onkeydown = e => { if (e.key === 'Enter') $('#nx') && $('#nx').click(); };
+}
+
+async function stepCoin() {
+  mb.innerHTML = `<div style="display:grid;place-items:center;padding:50px 0"><span class="spin" style="width:28px;height:28px"></span><p style="color:var(--mut);margin-top:14px;font-size:14px">Fetching live exchange rates…</p></div>`;
+  try {
+    if (!S.q || Date.now() / 1000 - S.qAt > QUOTE_TTL) { S.q = await quote(); S.qAt = Date.now() / 1000; }
+  } catch (e) {
+    mb.innerHTML = `<p style="color:#fca5a5;margin-bottom:16px">Exchange rates are temporarily unavailable. Please try again in a moment.</p><button class="btn btn-ghost" id="rt" style="width:100%">Retry</button>`;
+    $('#rt').onclick = () => render(); return;
+  }
+  const w = S.q.wallets;
+  mb.innerHTML = `
+    <div class="sum"><span>Amount due</span><b>${fmtUsd(S.q.price_usd)}</b></div>
+    <div class="fld"><label>Select payment method</label></div>
+    <div class="opts">${Object.keys(w).map(k => `
+      <button class="opt ${k === S.coin ? 'sel' : ''}" data-c="${k}"><i style="background:${ICON[k][1]}">${ICON[k][0]}</i><span><b>${esc(w[k].label)}</b><small>${esc(w[k].network)}</small></span></button>`).join('')}
+    </div>
+    <div class="sum" style="margin-bottom:20px"><span>You will send</span><b id="amt" style="font-family:var(--mono);font-size:16px"></b></div>
+    <div class="row2"><button class="btn btn-ghost" id="bk">Back</button><button class="btn btn-pri" id="nx">Continue</button></div>`;
+  const upd = () => { $('#amt').textContent = `${w[S.coin].amount} ${UNIT[S.coin]}`; mb.querySelectorAll('.opt').forEach(o => o.classList.toggle('sel', o.dataset.c === S.coin)); };
+  mb.querySelectorAll('.opt').forEach(o => o.onclick = () => { S.coin = o.dataset.c; upd(); });
+  upd();
+  $('#bk').onclick = () => go(0);
+  $('#nx').onclick = () => go(2);
+}
+
+function stepPay() {
+  const w = S.q.wallets[S.coin];
+  const isEvm = S.coin === 'eth' || S.coin === 'usdt_erc20';
+  mb.innerHTML = `
+    <div class="pay">
+      <div class="timer">Rate locked for <b id="tm">30:00</b></div>
+      <div class="qr" id="qr"></div>
+      <div class="kv"><label>Amount</label><div class="copy"><code>${esc(w.amount)} ${UNIT[S.coin]}</code><button data-cp="${esc(w.amount)}">Copy</button></div></div>
+      <div class="kv"><label>${esc(w.label)} address · ${esc(w.network)}</label><div class="copy"><code>${esc(w.address)}</code><button data-cp="${esc(w.address)}">Copy</button></div></div>
+      <div class="warn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 9v4M12 17h.01"/><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/></svg>
+        <span>Send only <b>${esc(w.label)}</b> on the <b>${esc(w.network)}</b> network. Network fees are paid by the sender — make sure the full amount arrives.</span></div>
+      <div class="fld" style="text-align:left"><label for="tx">Transaction hash (TXID)</label><input id="tx" class="mono" placeholder="${isEvm ? '0x…' : 'e.g. 7f3a…c91d'}" autocomplete="off" spellcheck="false"></div>
+      ${errBox()}
+      <div class="row2"><button class="btn btn-ghost" id="bk">Back</button><button class="btn btn-pri" id="nx">I have paid</button></div>
+    </div>`;
+  const uri = S.coin === 'btc' ? `bitcoin:${w.address}?amount=${w.amount}` : w.address;
+  const draw = () => { if (window.QRCode) new QRCode($('#qr'), {text:uri, width:360, height:360, correctLevel:QRCode.CorrectLevel.M}); else setTimeout(draw, 150); };
+  draw();
+  mb.querySelectorAll('[data-cp]').forEach(b => b.onclick = () => navigator.clipboard.writeText(b.dataset.cp).then(() => toast('Copied to clipboard')));
+  const end = S.qAt + QUOTE_TTL;
+  clearInterval(S.tmr);
+  S.tmr = setInterval(() => {
+    const el = $('#tm'); if (!el) return clearInterval(S.tmr);
+    const s = Math.max(0, Math.round(end - Date.now() / 1000));
+    el.textContent = `${String(Math.floor(s / 60)).padStart(2, '0')}:${String(s % 60).padStart(2, '0')}`;
+    if (!s) { clearInterval(S.tmr); S.q = null; toast('Rate expired — refreshing'); go(1); }
+  }, 1000);
+  $('#bk').onclick = () => go(1);
+  $('#nx').onclick = async () => {
+    const tx = $('#tx').value.trim();
+    const ok = isEvm ? /^0x[0-9a-fA-F]{64}$/.test(tx) : /^[0-9a-fA-F]{64}$/.test(tx);
+    if (!ok) return showErr(isEvm ? 'Enter a valid transaction hash (0x followed by 64 hex characters).' : 'Enter a valid transaction hash (64 hex characters).');
+    const b = $('#nx'); loadingBtn(b, true);
+    try {
+      S.order = await submitOrder({name:S.name, email:S.email, coin:S.coin, tx, amount:w.amount});
+      clearInterval(S.tmr); go(3);
+    } catch (e) {
+      loadingBtn(b, false, 'I have paid');
+      if (e.data && e.data.order) { S.order = e.data.order; clearInterval(S.tmr); return go(3); }
+      showErr(e.message === 'Failed to fetch' ? 'Network error. Please check your connection and try again.' : e.message);
+    }
+  };
+}
+
+function stepResult() {
+  const o = S.order, unit = UNIT[o.coin];
+  const ok = '<svg viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg>';
+  const clk = '<svg viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2.2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>';
+  const mail = CFG ? CFG.sales_email : '';
+  const mailto = `mailto:${mail}?subject=${encodeURIComponent('License order ' + o.id)}&body=${encodeURIComponent(`Order ID: ${o.id}\nName: ${S.name}\nEmail: ${S.email}\nPayment: ${o.amount} ${unit} (${o.coin})\nTX: ${o.tx}${o.license ? '\nLicense: ' + o.license : ''}`)}`;
+  let html;
+  if (o.status === 'paid') {
+    html = `<div class="big" style="background:rgba(34,197,94,.12)">${ok}</div><h4>Payment confirmed</h4>
+      <p>Thank you, ${esc(S.name)}. Your payment of ${esc(o.received ?? o.amount)} ${unit} has been confirmed on-chain.</p>
+      ${o.license ? `<div class="kv"><label>License key</label><div class="copy"><code>${esc(o.license)}</code><button data-cp="${esc(o.license)}">Copy</button></div></div>` : ''}
+      <div class="kv"><label>Order ID</label><div class="copy"><code>${esc(o.id)}</code><button data-cp="${esc(o.id)}">Copy</button></div></div>
+      <p style="font-size:14px">${o.license ? 'A copy of your license key has been sent to' : 'Your license key and download links will be delivered to'} <b style="color:var(--txt)">${esc(S.email)}</b>.</p>
+      ${o.license ? '' : `<a class="btn btn-pri" href="${mailto}" style="width:100%;margin-bottom:10px">Send order confirmation</a>`}
+      <button class="btn btn-ghost" id="dn" style="width:100%">Done</button>`;
+  } else {
+    const under = o.status === 'underpaid';
+    html = `<div class="big" style="background:rgba(245,158,11,.12)">${clk}</div><h4>${under ? 'Partial payment received' : 'Waiting for confirmation'}</h4>
+      <p>${under ? `We received ${esc(o.received)} ${unit}, which is less than the required ${esc(o.amount)} ${unit}. Please contact support with your order ID.`
+        : 'Your transaction has been recorded. It will be confirmed as soon as the network includes it in a block.'}</p>
+      <div class="kv"><label>Order ID</label><div class="copy"><code>${esc(o.id)}</code><button data-cp="${esc(o.id)}">Copy</button></div></div>
+      <div class="kv"><label>Transaction</label><div class="copy"><code>${esc(o.tx)}</code><button data-cp="${esc(o.tx)}">Copy</button></div></div>
+      ${errBox()}
+      ${under ? `<a class="btn btn-pri" href="${mailto}" style="width:100%">Contact support</a>` : `<button class="btn btn-pri" id="ck" style="width:100%">Check status</button><p style="font-size:13px;color:var(--dim);margin-top:12px">Status is checked automatically every 30 seconds.</p>`}`;
+  }
+  mb.innerHTML = `<div class="res">${html}</div>`;
+  mb.querySelectorAll('[data-cp]').forEach(b => b.onclick = () => navigator.clipboard.writeText(b.dataset.cp).then(() => toast('Copied to clipboard')));
+  if ($('#dn')) $('#dn').onclick = () => { close(); S.step = 0; S.order = null; };
+  clearInterval(S.poll);
+  if ($('#ck')) {
+    const check = async () => {
+      const b = $('#ck'); if (!b) return clearInterval(S.poll);
+      loadingBtn(b, true);
+      try { S.order = await refreshOrder(S.order); if (S.order.status !== 'pending') { clearInterval(S.poll); return render(); } }
+      catch (e) { showErr('Could not reach the network. Retrying…'); }
+      loadingBtn(b, false, 'Check status');
+    };
+    $('#ck').onclick = check;
+    S.poll = setInterval(check, 30000);
+  }
+}
+})();
+</script>
+</body>
+</html>
